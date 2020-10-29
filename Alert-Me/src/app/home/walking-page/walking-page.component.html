@@ -1,0 +1,20 @@
+<div class="container center-mobile">
+  <div class="btn-group">
+    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      {{walkingTime}} minutes <i class="fas fa-stopwatch"></i>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" type="button" (click)="changeWalkingTime(5)">5 min</button>
+      <button class="dropdown-item" type="button" (click)="changeWalkingTime(10)">10 min</button>
+      <button class="dropdown-item" type="button" (click)="changeWalkingTime(15)">15 min</button>
+      <div class="dropdown-divider"></div>
+      <input type="customTime" [(ngModel)]="customTime" name="customTime" class="form-control" id="customTime" aria-describedby="customTime">
+      <button class="dropdown-item" type="button" (click)="customTimeSetter()">Custom Time</button>
+    </div>
+  </div>
+  
+  <button type="button" class="btn btn-danger ml-5 mb-3 mt-3" (click)="startWalking()">Start Walking!</button>
+
+  
+
+</div>

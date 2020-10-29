@@ -1,0 +1,19 @@
+<div class="fixed-top">
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-dark p-4">
+      <button type="button" class="btn btn-info ml-5 mr-5 mb-3">Home</button>
+      <button type="button" class="btn btn-danger ml-5 mr-5 mb-3">Visualization</button>
+    </div>
+  </div>
+  <nav class="navbar navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <h1 class="navBarH1">Alert Me! <i class="fas fa-bell"></i></h1>
+  </nav>
+</div>
+
+<span id="walkPage" *ngIf="isInWalkingPage">
+  <app-walking-page></app-walking-page>
+</span>
+

@@ -1,0 +1,15 @@
+.navBarH1 {
+  color:  white;
+}
+
+.spinner_overlay {
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  opacity: 0.2;
+  z-index: 1000;
+}
