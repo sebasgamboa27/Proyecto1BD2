@@ -1,0 +1,152 @@
+//Comandos de Varela
+/ConfigServer
+docker run -d  --ip 25.10.118.245 -p 27018:27017 --name configAlert01 mongo mongod --port 27017 --configsvr --replSet "repconfigAlert" --dbpath /data/configdb 
+
+docker run -d --ip 25.10.118.245 -p 27019:27017  --name Naranjo_Server1 mongo mongod --port 27017  --shardsvr --replSet "NaranjoNode" 
+
+rs.initiate(
+  {
+    _id: "NaranjoNode",
+    members: [
+      { _id : 0, host : "25.10.118.245:27019" },
+      { _id : 1, host : "25.9.119.89:27019" },
+      { _id : 2, host : "25.11.234.208:27019" },
+    ]
+  }
+)
+docker run -d --ip 25.10.118.245 -p 27020:27017  --name Curridabat_Server2 mongo mongod --port 27017  --shardsvr --replSet "CurridabatNode" 
+
+docker run -d --ip 25.10.118.245 -p 27021:27017  --name Zapote_Server3 mongo mongod --port 27017  --shardsvr --replSet "ZapoteNode" 
+
+//Router
+docker run -d --ip 25.10.118.245 -p 27022:27017 --name alertmeRouter3 mongo mongos --port 27017 --configdb repconfigAlert/25.10.118.245:27018,25.11.234.208:27018,25.9.119.89:27018
+
+
+//Arbitro Zapote
+docker run -d --ip 25.10.118.245 -p 27023:2701 --name arbitroZapote mongo mongod --port 27017 --replSet ZapoteNode
+
+docker stop alertmeRouter3
+docker stop Naranjo_Server1
+docker stop Zapote_Server3
+docker stop Curridabat_Server2
+docker stop arbitroZapote
+docker stop configAlert01 
+
+docker start configAlert01 
+docker start arbitroZapote
+docker start Naranjo_Server1
+docker start Curridabat_Server2
+docker start Zapote_Server3
+docker start alertmeRouter3
+
+
+
+
+
+
+  
+
+
+
+//Comandos Gamboa
+/ConfigServer
+
+docker run -d  --ip 25.11.234.208 -p 27018:27017 --name configAlert02 mongo mongod --port 27017 --configsvr --replSet "repconfigAlert" --dbpath /data/configdb
+
+rs.initiate(
+  {
+    _id: "repconfigAlert",
+    configsvr: true,
+    members: [
+      { _id : 0, host : "25.10.118.245:27018" },
+      { _id : 1, host : "25.11.234.208:27018" },
+      { _id : 2, host : "25.9.119.89:27018" }
+    ]
+  }
+)
+
+docker run -d --ip 25.11.234.208 -p 27019:27017  --name Naranjo_Server2 mongo mongod --port 27017  --shardsvr --replSet "NaranjoNode" 
+
+docker run -d --ip 25.11.234.208 -p 27020:27017  --name Curridabat_Server3 mongo mongod --port 27017  --shardsvr --replSet "CurridabatNode" 
+
+docker run -d --ip 25.11.234.208 -p 27021:27017  --name Zapote_Server1 mongo mongod --port 27017  --shardsvr --replSet "ZapoteNode" 
+
+rs.initiate(
+  {
+    _id: "ZapoteNode",
+    members: [
+      { _id : 0, host : "25.10.118.245:27021" },
+      { _id : 1, host : "25.9.119.89:27021" },
+      { _id : 2, host : "25.11.234.208:27021" },
+    ]
+  }
+)
+
+docker run -d  --ip 25.11.234.208 -p 27022:27017 --name alertmeRouter1 mongo mongos --port 27017 --configdb repconfigAlert/25.10.118.245:27018,25.11.234.208:27018,25.9.119.89:27018
+
+
+docker run -d --ip 25.11.234.208 -p 27023:2701 --name arbitroCurri mongo mongod --port 27017 --replSet CurridabatNode
+
+rs.addArb("25.10.118.245:27023")
+
+rs.addArb("25.11.234.208 :27023")
+
+
+docker stop alertmeRouter3
+docker stop Naranjo_Server1
+docker stop Zapote_Server3
+docker stop Curridabat_Server2
+docker stop arbitroZapote
+docker stop configAlert01 
+
+docker start configAlert01 
+docker start arbitroZapote
+docker start Naranjo_Server1
+docker start Curridabat_Server2
+docker start Zapote_Server3
+docker start alertmeRouter3
+
+//Comandos Gutierrez
+/ConfigServer\
+docker run -d  --ip 25.9.119.89 -p 27018:27017 --name configAlert03 mongo mongod --port 27017 --configsvr --replSet "repconfigAlert" --dbpath /data/configdb 
+
+docker run -d --ip 25.9.119.89 -p 27019:27017  --name Naranjo_Server3 mongo mongod --port 27017  --shardsvr --replSet "NaranjoNode" 
+
+docker run -d --ip 25.10.118.245 -p 27020:27017  --name Curridabat_Server1 mongo mongod --port 27017  --shardsvr --replSet "CurridabatNode"
+
+
+rs.initiate(
+  {
+    _id: "CurridabatNode",
+    members: [
+      { _id : 0, host : "25.10.118.245:27020" },
+      { _id : 1, host : "25.9.119.89:27020" },
+      { _id : 2, host : "25.11.234.208:27020" },
+    ]
+  }
+)
+
+docker run -d --ip 25.9.119.89 -p 27021:27017  --name Zapote_Server2 mongo mongod --port 27017  --shardsvr --replSet "ZapoteNode" 
+
+docker run  --ip 25.9.119.89 -p 27022:27017 --name alertmeRouter2 mongo mongos --port 27017 --configdb repconfigAlert/25.10.118.245:27018,25.11.234.208:27018,25.9.119.89:27018
+
+//Árbitro Naranjo
+docker run -d --ip 25.9.119.89 -p 27023:2701 --name arbitroNaranjo mongo mongod --port 27017 --replSet NaranjoNode
+
+rs.addArb("25.9.119.89:27023")
+
+docker stop alertmeRouter3
+docker stop Naranjo_Server1
+docker stop Zapote_Server3
+docker stop Curridabat_Server2
+docker stop arbitroZapote
+docker stop configAlert01 
+
+docker start configAlert01 
+docker start arbitroZapote
+docker start Naranjo_Server1
+docker start Curridabat_Server2
+docker start Zapote_Server3
+docker start alertmeRouter3
+
+
