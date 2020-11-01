@@ -1,6 +1,8 @@
 {
     "GUID":"asdkjbnfwer9qwer89237nr89",
-    "Location":{},
+    "Location":{"lat":1,"long":1},
+    "Province":"Alajuela",
+    "Canton":"Naranjo",
     "TimeStamps":"2222:2222:2222",
     "Status": "In progress",
     "Feedback" : "null"
