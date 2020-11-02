@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const mongoose = require('mongoose');
 const { Schema } = mongoose 
-mongoose.connect('mongodb://localhost:27017/articulos', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/prueba', {useNewUrlParser: true});
 app.use(cors());
 app.use(bodyParser.json());
 const Articles = mongoose.model('Article',new Schema({
