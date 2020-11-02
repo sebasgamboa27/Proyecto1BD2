@@ -7,7 +7,15 @@ const { Schema } = mongoose
 mongoose.connect('mongodb://localhost:27017/articulos', {useNewUrlParser: true});
 app.use(cors());
 app.use(bodyParser.json());
-
+const Articles = mongoose.model('Article',new Schema({
+    GUID:String,
+    location:{lat:Number,long:Number},
+    Province:String,
+    Canton:String,
+    TimeStamps:Date,
+    State:Number,
+    SecurityLevel:Number
+}))
 
 
 app.listen(3050, function () {
@@ -34,16 +42,7 @@ app.post('/performanceTest/:json',(req,res)=>
 {  
     let json = JSON.parse (req.params.json)
     console.log(json);
-    const Articles = mongoose.model('Article',new Schema({
-    GUID:String,
-    location:{lat:Number,long:Number},
-    Province:String,
-    Canton:String,
-    TimeStamps:Date,
-    State:Number,
-    SecurityLevel:Number
-}))
-const newArticle = new Articles({
+var newArticle = new Articles({
         GUID:json.GUID,
         location:json.Location,
         Province:json.Province,
