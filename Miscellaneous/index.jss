@@ -38,9 +38,9 @@ app.get('/test',(req,res)=>
     }
     res.json(json);
 })
-app.post('/performanceTest/:json',(req,res)=>
+app.post('/performanceTest',(req,res)=>
 {  
-    let json = JSON.parse (req.params.json)
+    let json = req.body
     console.log(json);
 var newArticle = new Articles({
         GUID:json.GUID,
