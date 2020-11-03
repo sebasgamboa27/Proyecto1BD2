@@ -28,4 +28,6 @@ export class WalkingPageComponent implements OnInit {
     this.isWalking = true;
   }
 
+  
+
 }
