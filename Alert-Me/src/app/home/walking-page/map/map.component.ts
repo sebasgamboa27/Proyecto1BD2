@@ -7,8 +7,6 @@ import {AgmMap,MapsAPILoader } from '@agm/core';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  latitude: any;
-  longitude: any;
 
   constructor(private apiloader:MapsAPILoader) { }
 
