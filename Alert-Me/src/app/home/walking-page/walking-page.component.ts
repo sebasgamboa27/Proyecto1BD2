@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MapComponent } from './map/map.component';
 
 @Component({
   selector: 'app-walking-page',
@@ -10,6 +11,8 @@ export class WalkingPageComponent implements OnInit {
   walkingTime: number = 0;
   @Input() customTime: number;
   isWalking: boolean = false;
+
+  @ViewChild(MapComponent) map:MapComponent;
 
   constructor() { }
 
@@ -26,6 +29,12 @@ export class WalkingPageComponent implements OnInit {
 
   startWalking(){
     this.isWalking = true;
+    this.map.startWalking(this.walkingTime);
+  }
+
+  stopWalking(){
+    this.isWalking = false;
+    console.log('stop walking, arrived');
   }
 
   
