@@ -1,5 +1,10 @@
-<form>
+<form class="mb-4">
   <agm-map style="height: 300px;" [latitude]="lat" [longitude]="lng" [zoom]="zoom">
     <agm-marker  [latitude]="lat" [longitude]="lng"></agm-marker>
   </agm-map>
 </form>
+
+<span *ngIf="isWalking">
+  <h2 class="mt-5">Time Left: {{minString}}:{{secString}} <i class="fas fa-hourglass-half"></i></h2>
+</span>
+
