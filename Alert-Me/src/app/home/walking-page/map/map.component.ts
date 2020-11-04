@@ -18,6 +18,12 @@ export class MapComponent implements OnInit {
   @Output() stop = new EventEmitter<boolean>();
 
   timeLeft: number;
+  minutesLeft: number;
+  secondsLeft: number;
+
+  minString: number;
+  secString: number;
+
   timeInterval: any;
 
 
@@ -89,6 +95,14 @@ export class MapComponent implements OnInit {
   }
 
   decreaseTime(that: any){
+
+    that.minutesLeft = Math.floor(that.timeLeft / 60);
+    that.secondsLeft = that.timeLeft % 60;
+
+    that.minString = that.minutesLeft.toString().padStart(2,'0');
+    that.secString = that.secondsLeft.toString().padStart(2,'0');
+
+
     if(that.timeLeft === 0){
       clearInterval(that.timeInterval);
     }
