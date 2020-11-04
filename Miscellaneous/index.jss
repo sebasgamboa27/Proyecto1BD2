@@ -4,10 +4,10 @@ const bodyParser = require('body-parser');
 const app = express();
 const mongoose = require('mongoose');
 const { Schema } = mongoose 
-mongoose.connect('mongodb://localhost:27017/prueba', {useNewUrlParser: true});
+mongoose.connect('mongodb://25.11.234.208:27022/AlertMe', {useNewUrlParser: true});
 app.use(cors());
 app.use(bodyParser.json());
-const Articles = mongoose.model('Article',new Schema({
+const Logs = mongoose.model('Log',new Schema({
     GUID:String,
     location:{lat:Number,long:Number},
     Province:String,
