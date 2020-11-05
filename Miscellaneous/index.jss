@@ -42,7 +42,16 @@ app.post('/performanceTest',(req,res)=>
 {  
     let json = req.body
     console.log(json);
-var newArticle = new Articles({
+    for(let i = 0; i<11;i++)
+    {
+        myFunc(json)
+    }
+    res.send("Pepito")
+})
+
+
+function myFunc(json) {
+  var newArticle = new Logs({
         GUID:json.GUID,
         location:json.Location,
         Province:json.Province,
@@ -57,6 +66,5 @@ var newArticle = new Articles({
           {
               console.log("se cayó");
           }
-          res.send("Lo metió")
       })
-})
+}
