@@ -1,1 +1,10 @@
-100 --> System: 20% User: 25%
+TR|RQ
+
+10|10  --> Carlos: 14% Jorge: 15% Sebas: 9%
+20|20  --> Carlos: 20% Jorge: 30% Sebas: 17%
+20|50  --> Carlos: 28% Jorge: 43% Sebas: 21%
+30|40  --> Carlos: 30% Jorge: 42% Sebas: 22%
+50|50  --> Carlos: 30% Jorge: 30% Sebas: 22%
+50|100 --> Carlos: 30% Jorge: 45% Sebas: 22%
+100|1  --> Carlos: 30% Jorge: 50% Sebas: 28%
+
