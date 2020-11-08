@@ -3,7 +3,7 @@ import * as bodyParser from 'body-parser';
 import { Logger } from '../common';
 
 
-class Routes {
+export class Routes {
 
     public express: express.Application 
     public logger: Logger 
