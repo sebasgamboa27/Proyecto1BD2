@@ -113,7 +113,7 @@ docker run -d  --ip 25.9.119.89 -p 27018:27017 --name configAlert03 mongo mongod
 docker run -d --ip 25.9.119.89 -p 27019:27017  --name Naranjo_Server3 mongo mongod --port 27017  --shardsvr --replSet "NaranjoNode"
 
 docker run -d --ip 25.9.119.89 -p 27020:27017  --name Curridabat_Server1 mongo mongod --port 27017  --shardsvr --replSet "CurridabatNode"
-
+ 
 
 rs.initiate(
   {
