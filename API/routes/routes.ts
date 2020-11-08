@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { Logger } from '../common';
+import AlertMe from './alertme'
 
 
 export class Routes {
@@ -25,14 +26,7 @@ export class Routes {
     }
 
     private routes(): void {
-
-        //this.express.use('/app', App);
-
-        //this.express.use('/admin',Admin)
-
-        
-
-    
+        this.express.use('/alertme', AlertMe) 
     }
 }
 
