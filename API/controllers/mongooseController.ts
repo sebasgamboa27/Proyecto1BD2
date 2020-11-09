@@ -1,4 +1,4 @@
-import {Logger} from '../common'
+import {Constants, Logger} from '../common'
 import * as mongoose from 'mongoose';
 
 /**
@@ -7,31 +7,31 @@ import * as mongoose from 'mongoose';
 export class MongooseController{
 
   private static instance : MongooseController 
-  private log : Logger 
+
   private db : any 
+
   private constructor()
   {
-    this.log = new Logger() 
         try
         {
-            mongoose.connect('mongodb://host.docker.internal:27017/Case5',
+            mongoose.connect('mongodb://25.11.234.208:27022/AlertMe,25.10.118.245:27022/AlertMe,25.9.119.89:27022/AlertMe',
             {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
-                socketTimeoutMS: 2000
+                socketTimeoutMS: Constants.SOCKET_TIMEOUT
             }) 
             this.db = mongoose.connection 
 
             this.db.on('error', () => {
-                this.log.error("No puedo conectar a mongo")
+              Logger.error(Constants.CONNECTION_ERROR_MSG)
             }) 
 
             this.db.once('open', ()=> {
-                this.log.info("Conectado a mongo")
+              Logger.info(Constants.CONNECTED_MSG)
             }) 
         } catch (e)
         {
-            this.log.error(e) 
+          Logger.error(e) 
         }
   }
   /**
