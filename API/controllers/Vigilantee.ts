@@ -4,7 +4,7 @@ import {Logger} from '../common'
 export class Vigilantee {
     
     public static async alertMe(pGUID : any, pLocation : any, pStatus : any, pFeedback : any) {
-        let mongoDriver = new MongoDriver()
+        let mongoDriver = MongoDriver.getInstance()
 
         let timeStamp = new Date()
     

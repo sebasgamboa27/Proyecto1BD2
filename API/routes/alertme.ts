@@ -8,6 +8,7 @@ const router = express.Router();
 //Request principal
 app.post('/log/:guid/:location/:status/:feedback?', async (req, res) => {
     Vigilantee.alertMe(req.params.guid, req.params.location, req.params.status,req.params.feedback)
+    res.send("hola mundo")
   }
 )
 

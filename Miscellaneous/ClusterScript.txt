@@ -133,7 +133,15 @@ docker run -d --ip 25.9.119.89 -p 27022:27017 --name alertmeRouter2 mongo mongos
 //Árbitro Naranjo
 docker run -d --ip 25.9.119.89 -p 27023:27017 --name arbitroNaranjo mongo mongod --port 27017 --replSet NaranjoNode
 
+
+// Árbitro Curridabat
+docker run -d --ip 25.9.119.89 -p 27024:27017 --name arbitroCurri_local mongo mongod --port 27017 --replSet CurridabatNode
+rs.addArb("25.9.119.89:27024")
+rs.addArb("25.10.118.245:27024")
 rs.addArb("25.11.234.208:27023")
+
+//Árbitro Zapote
+docker run -d --ip 25.9.119.89 -p 27025:27017 --name arbitroZapote_local mongo mongod --port 27017 --replSet ZapoteNode
 
 docker stop alertmeRouter2
 docker stop Naranjo_Server3
