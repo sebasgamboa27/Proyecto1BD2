@@ -11,7 +11,7 @@ const port = Constants.SERVER_PORT;
 server.on('listening', function(): void {
     let addr = server.address();
     let bind = (typeof addr === 'string') ? `pipe ${addr}` : `port ${addr.port}`;
-    Logger.info(`Mongo Server API running on port${bind}`);
+    Logger.info(`Pocket Vigilantee server API running on port${bind}`);
 });
 
 module.exports = App;

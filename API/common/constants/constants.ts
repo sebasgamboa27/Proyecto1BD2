@@ -16,4 +16,6 @@ export class Constants {
 
     public static CONNECTED_MSG = "Mongo connection stablished."
 
+    public static CONNECTION_CLOSED = "Mongo connection closed."
+
 }
