@@ -1,8 +1,6 @@
-import { Mongoose } from "mongoose";
 import { Constants, Logger } from "../common";
+import { MongoClient } from "mongodb";
 
-const Server = require('mongodb').Server;
-const { MongoClient } = require("mongodb");
 
 export class MongoDriver {
 
