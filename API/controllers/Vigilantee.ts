@@ -9,11 +9,11 @@ export class Vigilantee {
         let timeStamp = new Date()
     
         let log = {
-            GUID : pGUID,
-            Location : pLocation,
+            GUID      : pGUID,
+            Location  : pLocation,
             TimeStamp : timeStamp,
-            Status : pStatus,
-            Feedback : pFeedback
+            Status    : pStatus,
+            Feedback  : pFeedback
         }
 
         mongoDriver.write("AlertMe", "Logs", log)

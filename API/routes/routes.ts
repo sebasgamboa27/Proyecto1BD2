@@ -26,7 +26,7 @@ export class Routes {
     }
 
     private routes(): void {
-        this.express.use('/alertme', AlertMe) 
+        this.express.use('/alertme', AlertMe)
     }
 }
 

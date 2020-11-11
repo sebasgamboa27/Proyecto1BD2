@@ -1,12 +1,15 @@
 import App from './app';
 import * as http from 'http';
 import { Logger, Constants } from './common';
+import { MongoDriver } from './controllers';
 
 const port = Constants.SERVER_PORT;
 
-    App.set('port', port);
-    const server = http.createServer(App);
-    server.listen(port);
+App.set('port', port);
+const server = http.createServer(App);
+server.listen(port);
+
+MongoDriver.getInstance()
 
 server.on('listening', function(): void {
     let addr = server.address();
