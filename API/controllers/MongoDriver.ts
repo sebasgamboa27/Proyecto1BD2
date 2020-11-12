@@ -20,8 +20,6 @@ export class MongoDriver {
       try {
         const database = MongoDriver.instance.client.db(pDatabase);
         const collection = database.collection(pCollection);
-        // create a document to be inserted
-        
         collection.insertOne(pDocument).then((result : any) => {
           Logger.info(
             `${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`,
