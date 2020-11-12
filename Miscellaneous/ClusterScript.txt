@@ -25,8 +25,6 @@ docker run -d --ip 25.10.118.245 -p 27022:27017 --name alertmeRouter3 mongo mong
 //Arbitro Zapote
 docker run -d --ip 25.10.118.245 -p 27023:27017 --name arbitroZapote mongo mongod --port 27017 --replSet ZapoteNode
 
-
-
 docker stop alertmeRouter3
 docker stop Naranjo_Server1
 docker stop Zapote_Server3
@@ -109,16 +107,13 @@ docker start Zapote_Server3
 docker start alertmeRouter3
 
 //Comandos Gutierrez
-
 /ConfigServer\
 docker run -d  --ip 25.9.119.89 -p 27018:27017 --name configAlert03 mongo mongod --port 27017 --configsvr --replSet "repconfigAlert" --dbpath /data/configdb 
 
-/NaranjoServer\
-docker run -d --ip 25.9.119.89 -p 27019:27017  --name Naranjo_Server3 mongo mongod --port 27017  --shardsvr --replSet "NaranjoNode" 
+docker run -d --ip 25.9.119.89 -p 27019:27017  --name Naranjo_Server3 mongo mongod --port 27017  --shardsvr --replSet "NaranjoNode"
 
-/CurridabatServer\
-docker run -d --ip 25.10.118.245 -p 27020:27017  --name Curridabat_Server1 mongo mongod --port 27017  --shardsvr --replSet "CurridabatNode"
-
+docker run -d --ip 25.9.119.89 -p 27020:27017  --name Curridabat_Server1 mongo mongod --port 27017  --shardsvr --replSet "CurridabatNode"
+ 
 
 rs.initiate(
   {
@@ -138,120 +133,28 @@ docker run -d --ip 25.9.119.89 -p 27022:27017 --name alertmeRouter2 mongo mongos
 //Árbitro Naranjo
 docker run -d --ip 25.9.119.89 -p 27023:27017 --name arbitroNaranjo mongo mongod --port 27017 --replSet NaranjoNode
 
-rs.addArb("25.9.119.89:27023")
 
-docker stop alertmeRouter3
-docker stop Naranjo_Server1
-docker stop Zapote_Server3
-docker stop Curridabat_Server2
-docker stop arbitroZapote
-docker stop configAlert01 
+// Árbitro Curridabat
+docker run -d --ip 25.9.119.89 -p 27024:27017 --name arbitroCurri_local mongo mongod --port 27017 --replSet CurridabatNode
+rs.addArb("25.9.119.89:27024")
+rs.addArb("25.10.118.245:27024")
+rs.addArb("25.11.234.208:27023")
 
-docker start configAlert01 
-docker start arbitroZapote
-docker start Naranjo_Server1
-docker start Curridabat_Server2
-docker start Zapote_Server3
-docker start alertmeRouter3
+//Árbitro Zapote
+docker run -d --ip 25.9.119.89 -p 27025:27017 --name arbitroZapote_local mongo mongod --port 27017 --replSet ZapoteNode
 
+docker stop alertmeRouter2
+docker stop Naranjo_Server3
+docker stop Zapote_Server2
+docker stop Curridabat_Server1
+docker stop arbitroNaranjo
+docker stop configAlert03
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#general
-sh.addShard( "NaranjoNode/25.10.118.245:27019");  
-sh.addShard( "ZapoteNode/25.11.234.208:27021");
-sh.addShard( "CurridabatNode/25.10.118.245:27020");
-
-sh.enableSharding("AlertMe");
-
-
-sh.shardCollection("AlertMe.Logs", { Canton : 1 } )
-
-sh.addShardTag("NaranjoNode","NA")
-sh.addShardTag("ZapoteNode","ZP")
-sh.addShardTag("CurridabatNode","CB")
-
-//Luego hacemos el tag range
-sh.addTagRange("AlertMe.Logs",
-{Canton:"Naranjo"},
-{Canton:"Naranjo1"},
-"NA"
-)
-sh.addTagRange("AlertMe.Logs",
-{Canton:"Zapote"},
-{Canton:"Zapote2"},
-"ZP"
-)
-sh.addTagRange("AlertMe.Logs",
-{Canton:"Curridabat"},
-{Canton:"Curridabat2"},
-"CB"
-)
-
-
-
-
-db.Logs.insert({
-    "GUID":"asdkjbnfwer9qwer89237nr89",
-    "Location":{"lat":1,"long":1},
-    "Province":"Alajuela",
-    "Canton":"Naranjo",
-    "TimeStamps":"2222:2222:2222",
-    "Status": "In progress",
-    "Feedback" : "null"
-}
-)
-
-db.Logs.find()
-
-
-
-{
-    "GUID":"asdkjbnfwer9qwer89237nr89",
-    "Location":{"lat":1,"long":1},
-    "Province":"Alajuela",
-    "Canton":"Naranjo",
-    "TimeStamps":"2222:2222:2222",
-    "Status": "In progress",
-    "Feedback" : "null"
-}
- 
- 
- 
- 
-
-db.Logs.insert({
-    "GUID":"hjebvchjebhjrebf",
-    "Location":{"lat":12,"long":41},
-    "Province":"San José",
-    "Canton":"Curridabat",
-    "TimeStamps":"2343:3244:4334",
-    "Status": "In progress",
-    "Feedback" : "null"
-}
-)
-
-db.Logs.insert(
-    {"GUID":"asdkjbnfwer9qwer89237nr89",
-    "Location":{"lat":1,"long":1},
-    "Province":"San José",
-    "Canton":"Zapote",
-    "TimeStamps":"2222:2222:2222",
-    "Status": "In progress",
-    "Feedback" : "null"
-}
-)
+docker start configAlert03 
+docker start arbitroNaranjo
+docker start Naranjo_Server3
+docker start Curridabat_Server1
+docker start Zapote_Server2
+docker start alertmeRouter2
 
 

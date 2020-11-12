@@ -32,7 +32,7 @@ class App {
         }) 
 
         // user route
-        this.express.use('/api', Routes) 
+        this.express.use('/vigilantee', Routes) 
 
         // handle undefined routes
         this.express.use('*', (req,res,next) => {

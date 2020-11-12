@@ -1,14 +1,14 @@
 export class Logger {
-
-    public info(logText: string): void {
+    
+    public static info(logText: string): void {
         console.log({"date" : new Date(), "level": "info", "message":logText}) 
     }
 
-    public debug(logText: string): void {
+    public static debug(logText: string): void {
         console.log({"date" : new Date(), "level": "debug", "message":logText}) 
     }
 
-    public error(logText: string): void {
+    public static error(logText: string): void {
         console.log({"date" : new Date(), "level": "error", "message":logText}) 
     }
 }

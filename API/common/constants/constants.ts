@@ -1,16 +1,23 @@
 export class Constants {
 
+    // API constants
+
     public static SERVER_PORT = 3000
     
+    public static WRONG_ROUTE_MESSAGE = "Route error."
 
-    public static WRONG_ROUTE_MESSAGE = "Error en la ruta."
+    public static WELCOME_MESSAGE = "API listening..."
 
-    public static WELCOME_MESSAGE = "Ingrese parámetros en la ruta para obtener resultados."
+    // Mongo connection constants
 
-    public static NO_DB_RESULTS = "No se encontraron archivos relacionados a los hashtags."
+    public static SOCKET_TIMEOUT = 2000
 
+    public static CONNECTION_ERROR_MSG = "Unable to connect to mongo."
 
+    public static CONNECTED_MSG = "Mongo connection stablished."
 
+    public static CONNECTION_CLOSED = "Mongo connection closed."
 
+    public static POOL_SIZE = 20
 
 }

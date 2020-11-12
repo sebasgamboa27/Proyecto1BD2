@@ -1,9 +1,10 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { Logger } from '../common';
+import AlertMe from './alertme'
 
 
-class Routes {
+export class Routes {
 
     public express: express.Application 
     public logger: Logger 
@@ -25,14 +26,7 @@ class Routes {
     }
 
     private routes(): void {
-
-        //this.express.use('/app', App);
-
-        //this.express.use('/admin',Admin)
-
-        
-
-    
+        this.express.use('/alertme', AlertMe)
     }
 }
 
