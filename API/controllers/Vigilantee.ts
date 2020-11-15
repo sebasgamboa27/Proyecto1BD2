@@ -20,8 +20,10 @@ export class Vigilantee {
         mongoDriver.write("AlertMe", "Logs", log)
     }
 
-    public static async getDailyActivity(weekday : number){
+    public static getDailyActivity(weekday : number){
         
+        let mongoDriver = MongoDriver.getInstance()
+
         let query =      
         [
             {
@@ -34,7 +36,7 @@ export class Vigilantee {
             {
                 $match:
                 {
-                    weekDay : 1
+                    weekDay : weekday
                 }
             },
             {
@@ -52,9 +54,30 @@ export class Vigilantee {
             }
         
         ]
+
+        let dailyActivity = new Promise(
+            (resolve, reject) => 
+            {
+                try
+                {
+                    resolve(mongoDriver.aggregate('AlertMe', 'Logs', query))
+                }
+                catch (error)
+                {
+                    reject(error)
+                }
+                
+            }
+        );
+
+        return dailyActivity
+
     }
     
-    public static async getWeeklyActivity(){
+    public static getWeeklyActivity(){
+
+        let mongoDriver = MongoDriver.getInstance()
+
         let query =
         [
             {
@@ -77,6 +100,23 @@ export class Vigilantee {
                 }
             }
         ]
+
+        let dailyActivity = new Promise(
+            (resolve, reject) => 
+            {
+                try
+                {
+                    resolve(mongoDriver.aggregate('AlertMe', 'Logs', query))
+                }
+                catch (error)
+                {
+                    reject(error)
+                }
+                
+            }
+        );
+
+        return dailyActivity
     }
     
     public static async getIntersections(){
