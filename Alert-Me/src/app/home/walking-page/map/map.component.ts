@@ -63,7 +63,12 @@ export class MapComponent implements OnInit {
                   console.log(this.currentAdressString);
 
                   //esta es la llamada para la base de datos
-                  console.log([this.lat.toString(),this.lng.toString(),this.currentAdressString],'Esto se envia a la bd');
+                  let newAddressString = this.currentAdressString.split(' ');
+                  console.log(newAddressString,'yesss');
+                  let province = newAddressString[3];
+                  let canton = newAddressString[5];
+                  
+                  console.log([this.lat.toString(),this.lng.toString(),province,canton],'Esto se envia a la bd');
                   //this.database.ejemploDePeticionAlAPI([this.lat.toString(),this.lng.toString(),this.currentAdressString]);
                   
                   

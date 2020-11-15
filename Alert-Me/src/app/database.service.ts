@@ -15,8 +15,8 @@ export class DatabaseService {
 
   //Este es un ejemplo de peticion al API, estas son las funciones para pedirle al API que traiga cosas, o que haga cosas
 
-  async ejemploDePeticionAlAPI(data: string[]) {
-    return await this.http.post<any[]>('http://localhost:3000/getStuff',{}).toPromise();
+  async ejemploDePeticionAlAPI(lat:string,lng:string,province:string,canton:string) {
+    return await this.http.post<any[]>(`localhost:3000/vigilantee/alertme/log/hola/mundo/Naranjo/Province/entero/perras`,{}).toPromise();
   }
 
 }
