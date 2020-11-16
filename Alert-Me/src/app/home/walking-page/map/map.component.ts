@@ -30,6 +30,9 @@ export class MapComponent implements OnInit {
 
   ID: string;
 
+  feedback: string = '';
+  feedbackModalState: boolean = false;
+
 
 
 
@@ -70,10 +73,15 @@ export class MapComponent implements OnInit {
                   console.log(newAddressString,'yesss');
                   let province = newAddressString[3];
                   let canton = newAddressString[5];
+
+                  let status = 'In Progress';
+
+                  if(!this.isWalking){
+                    status = 'Finished';
+                  }
                   
                   console.log([this.ID,this.lat.toString(),this.lng.toString(),province,canton],'Esto se envia a la bd');
-                  //this.database.insertLocation([this.lat.toString(),this.lng.toString(),this.currentAdressString]);
-                  
+                  this.database.insertLocation(this.ID,this.lat.toString(),this.lng.toString(),province,canton,status,' ');
                   
                   
                 } else {
