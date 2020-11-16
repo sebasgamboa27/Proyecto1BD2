@@ -28,6 +28,8 @@ export class MapComponent implements OnInit {
 
   timeInterval: any;
 
+  ID: string;
+
 
 
 
@@ -37,6 +39,7 @@ export class MapComponent implements OnInit {
     this.getLocation()
     this.agmMap.triggerResize(true);
     this.zoom = 16;
+    this.ID = '_' + Math.random().toString(36).substr(2, 9);
   }
 
   async getLocation(){
@@ -63,8 +66,13 @@ export class MapComponent implements OnInit {
                   console.log(this.currentAdressString);
 
                   //esta es la llamada para la base de datos
-                  console.log([this.lat.toString(),this.lng.toString(),this.currentAdressString],'Esto se envia a la bd');
-                  //this.database.ejemploDePeticionAlAPI([this.lat.toString(),this.lng.toString(),this.currentAdressString]);
+                  let newAddressString = this.currentAdressString.split(' ');
+                  console.log(newAddressString,'yesss');
+                  let province = newAddressString[3];
+                  let canton = newAddressString[5];
+                  
+                  console.log([this.ID,this.lat.toString(),this.lng.toString(),province,canton],'Esto se envia a la bd');
+                  //this.database.insertLocation([this.lat.toString(),this.lng.toString(),this.currentAdressString]);
                   
                   
                   
