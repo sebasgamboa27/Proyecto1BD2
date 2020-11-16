@@ -31,30 +31,92 @@ export class MongoDriver {
     }
   }
 
-  private openConnection(pClient : any) {
+  public find(pDatabase : string, pCollection : string, pQuery : any)
+  {
+    let findResult = new Promise(
+      (resolve, reject) => 
+      {
+        try
+        {
+          const database = MongoDriver.instance.client.db(pDatabase);
+          const collection = database.collection(pCollection);
+          const cursor = collection.find(pQuery)
+          resolve(cursor.toArray())
+        }
+        catch(error)
+        {
+          Logger.error("en find")
+          reject(error)
+        }
+      }
+    )
+
+    return findResult
+  }
+
+  public async aggregate(pDatabase : string, pCollection : string, pQuery : any)
+  {
+      let aggregateResult = new Promise(
+        (resolve, reject) => 
+        {
+            try
+            {
+              const database = MongoDriver.instance.client.db(pDatabase);
+              const collection = database.collection(pCollection);
+              const cursor = collection.aggregate(pQuery)
+              resolve(cursor.toArray())
+            }
+            catch(error)
+            {
+              Logger.error("en aggs")
+              reject(error)
+            }
+        }
+      )
+
+    return aggregateResult
+  }
+
+  private openConnection(pClient : any) 
+  {
     pClient.connect()
-    .then(() => {
-      Logger.info(Constants.CONNECTED_MSG)
-    })
-    .catch((error : any) => {
-      Logger.error(error)
-    });
+    .then(
+      () => 
+      {
+        Logger.info(Constants.CONNECTED_MSG)
+      }
+    )
+    .catch(
+      (error : any) => 
+      {
+        Logger.error(error)
+      }
+    );
   }
 
-  public closeConnection() {
+  public closeConnection() 
+  {
     this.client.close()
-    .then(() => {
-      MongoDriver.instance = null
-      Logger.info(Constants.CONNECTION_CLOSED)
-    })
-    .catch((error : any) => {
-      Logger.error(error)
-    });
+    .then(
+      () => 
+      {
+        MongoDriver.instance = null
+        Logger.info(Constants.CONNECTION_CLOSED)
+      }
+    )
+    .catch(
+      (error : any) => 
+      {
+        Logger.error(error)
+      }
+    );
 
   }
 
-  public static getInstance() : MongoDriver {
-    if (!MongoDriver.instance) {
+  public static getInstance() : MongoDriver 
+  {
+    if (!MongoDriver.instance) 
+    {
       Logger.info("new instance")
       MongoDriver.instance = new MongoDriver();
     }
