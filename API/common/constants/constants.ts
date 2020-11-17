@@ -19,5 +19,7 @@ export class Constants {
     public static CONNECTION_CLOSED = "Mongo connection closed."
 
     public static POOL_SIZE = 20
+    
+    public static GEOPOSITIONAL_INTERSECTION_MINIMUM = 2
 
 }

@@ -1,5 +1,5 @@
 import {MongoDriver} from '.'
-import {Logger} from '../common'
+import {Constants, Logger} from '../common'
 
 export class Vigilantee {
     
@@ -146,7 +146,7 @@ export class Vigilantee {
                                     $group : {_id:null,count:{$sum:1}}
                                 },
                                 {
-                                    "$match": {"count":{"$gte":5} } 
+                                    "$match": {"count":{"$gte":Constants.GEOPOSITIONAL_INTERSECTION_MINIMUM} } 
                                 } 
                             ]
                               MongoDriver.getInstance().aggregate("AlertMe","Logs",getIntersect).then(inter=>
