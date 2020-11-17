@@ -46,7 +46,7 @@ export class MapComponent implements OnInit {
   }
 
   async getLocation(){
-   
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position: Position) => {
         if (position) {
@@ -55,12 +55,12 @@ export class MapComponent implements OnInit {
           this.getAddress=(this.lat,this.lng)
           console.log(position);
 
-          
+
           this.apiloader.load().then(() => {
             let geocoder = new google.maps.Geocoder;
             let latlng = {lat: this.lat, lng: this.lng};
             let that = this;
-            
+
             geocoder.geocode({'location': latlng}, (results, status) => {
                 if (results[0]) {
                   let currentLocation = results[0].formatted_address;
@@ -69,21 +69,22 @@ export class MapComponent implements OnInit {
                   console.log(this.currentAdressString);
 
                   //esta es la llamada para la base de datos
-                  let newAddressString = this.currentAdressString.split(' ');
+                  let newAddressString = this.currentAdressString.split(', ');
                   console.log(newAddressString,'yesss');
-                  let province = newAddressString[3];
-                  let canton = newAddressString[5];
+                  let proviceSplit =  newAddressString[1].split(' ')
+                  let province = proviceSplit[0];
+                  let canton = newAddressString[2];
 
                   let status = 'In Progress';
 
                   if(!this.isWalking){
                     status = 'Finished';
                   }
-                  
+
                   console.log([this.ID,this.lat.toString(),this.lng.toString(),province,canton],'Esto se envia a la bd');
                   this.database.insertLocation(this.ID,this.lat.toString(),this.lng.toString(),province,canton,status,' ');
-                  
-                  
+
+
                 } else {
                   console.log('Not found');
                 }
@@ -97,7 +98,7 @@ export class MapComponent implements OnInit {
   }
 
 
-  //aqui esta la funcion con el timer 
+  //aqui esta la funcion con el timer
 
   startWalking(max: number){
 
@@ -119,10 +120,10 @@ export class MapComponent implements OnInit {
         else{
           this.getLocation();
         }
-        
+
       }, interval * 1000 * i);
     }
-    
+
   }
 
   decreaseTime(that: any){
@@ -139,7 +140,7 @@ export class MapComponent implements OnInit {
     }
     else{
       that.timeLeft-= 1;
-      
+
     }
   }
 

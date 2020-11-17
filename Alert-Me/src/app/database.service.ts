@@ -16,8 +16,8 @@ export class DatabaseService {
   //Este es un ejemplo de peticion al API, estas son las funciones para pedirle al API que traiga cosas, o que haga cosas
 
   async insertLocation(id:string,lat:string,lng:string,province:string,canton:string,status:string,feeback:string) {
-    const location = [lng , lat];
-    return await this.http.post<any[]>(`localhost:3000/log/:${id}/:${location}/:${canton}/:${province}/:${status}/:${feeback}?`,{}).toPromise();
+    const location = {latitud:lat,longitud:lng};
+    return await this.http.post<any[]>(`localhost:3000/log/${id}/${lat}/${lng}/${canton}/${province}/${status}/${feeback}`,{}).toPromise();
   }
 
 }
