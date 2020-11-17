@@ -8,3 +8,28 @@
   <h2 class="mt-5">Time Left: {{minString}}:{{secString}} <i class="fas fa-hourglass-half"></i></h2>
 </span>
 
+<span *ngIf="passwordShowState">
+  <div class="alert alert-success" role="alert">
+    This is your password, save it: {{password}}
+  </div>
+</span>
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Password Check</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Please type your password to continue:
+        <input type="typedPassword" [(ngModel)]="typedPassword" name="typedPassword" class="form-control" id="typedPassword" aria-describedby="typedPassword">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="checkPassword()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
