@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class DatabaseService {
 
   async insertLocation(id:string,lat:string,lng:string,province:string,canton:string,status:string,feeback:string) {
     const location = {latitud:lat,longitud:lng};
-    return await this.http.post<any[]>(`localhost:3000/log/${id}/${lat}/${lng}/${canton}/${province}/${status}/${feeback}`,{}).toPromise();
+    return await this.http.post<any[]>(`http://localhost:3000/vigilantee/alertme/log/${id}/${lat}/${lng}/${canton}/${province}/${status}/${feeback}`,{}).toPromise();
   }
 
 }
