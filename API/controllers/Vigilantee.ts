@@ -151,7 +151,15 @@ export class Vigilantee {
                             ]
                               MongoDriver.getInstance().aggregate("AlertMe","Logs",getIntersect).then((inter:any)=>
                                 {
-                                  intersections.push([currentCoordinates,inter.count])
+                                    let result= inter[Constants.GEOPOSITIONAL_INDEX_RESULT]
+                                    if((result!=null))
+                                    {
+                                        let numIntersec= result.count
+                                        if(numIntersec>1)
+                                        {             
+                                          intersections.push([currentCoordinates,numIntersec])
+                                        }
+                                    }  
                                 })
                             });
                         resolve(intersections)
