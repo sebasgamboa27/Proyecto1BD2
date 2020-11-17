@@ -71,8 +71,7 @@ export class MapComponent implements OnInit {
                   //esta es la llamada para la base de datos
                   let newAddressString = this.currentAdressString.split(', ');
                   console.log(newAddressString,'yesss');
-                  let proviceSplit =  newAddressString[1].split(' ')
-                  let province = proviceSplit[0];
+                  let province = newAddressString[1];
                   let canton = newAddressString[2];
 
                   let status = 'In Progress';
@@ -83,8 +82,6 @@ export class MapComponent implements OnInit {
 
                   console.log([this.ID,this.lat.toString(),this.lng.toString(),province,canton],'Esto se envia a la bd');
                   this.database.insertLocation(this.ID,this.lat.toString(),this.lng.toString(),province,canton,status,' ');
-
-
                 } else {
                   console.log('Not found');
                 }
