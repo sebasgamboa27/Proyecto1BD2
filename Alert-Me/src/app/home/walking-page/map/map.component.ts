@@ -49,7 +49,8 @@ export class MapComponent implements OnInit {
     this.agmMap.triggerResize(true);
     this.zoom = 16;
     this.ID = '_' + Math.random().toString(36).substr(2, 9);
-    this.password = Math.random().toString(36).substr(2, 9);
+    this.showModal();
+    //this.password = Math.random().toString(36).substr(2, 9);
   }
 
   async getLocation(){
@@ -111,7 +112,7 @@ export class MapComponent implements OnInit {
     setTimeout(() => {
       this.passwordShowState = false;
 
-    }, 20000);
+    }, 10000);
 
     let interval = 5;
 
@@ -156,11 +157,25 @@ export class MapComponent implements OnInit {
   }
 
   showModal(){
+    
     ($('#staticBackdrop')as any).modal('show'); 
   }
 
   checkPassword(){
-    if(this.password === this.typedPassword){
+    
+    if(!this.isWalking && !this.finishedWalk){
+      this.password = this.typedPassword;
+      $('#staticBackdrop').on('hidden.bs.modal', function (e) {
+        $(this)
+          .find("input,textarea,select")
+             .val('')
+             .end()
+          .find("input[type=checkbox], input[type=radio]")
+             .prop("checked", "")
+             .end();
+      })
+    }
+    else if(this.password === this.typedPassword){
       console.log('listo')
     }
     else{
