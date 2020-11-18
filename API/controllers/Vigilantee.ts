@@ -106,11 +106,10 @@ export class Vigilantee {
                                 {
                                     let numIntersec= result.count
             
-                                        let PowerBiData= [{'lat':currentCoordinates[1], 'long':currentCoordinates[0], "intersecs":numIntersec}]
+                                        let PowerBiData= [{'lat':currentCoordinates[1], 'long':currentCoordinates[0], "intersections":numIntersec}]
                                         var stringifiedPowerBiData= JSON.stringify(PowerBiData)
                                         const powerBiRequest = request.post(Constants.POWERBI_HOST, stringifiedPowerBiData,
                                         (error, res, body) => {
-                                            console.log(`Status code: ${res.statusCode}`);
                                         });
                                         powerBiRequest.on('error', (e) => {
                                             console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
