@@ -26,6 +26,4 @@ export class Constants {
 
     public static GEOPOSITIONAL_INDEX_RESULT = 0
 
-    public static POWERBI_HOST = "https://api.powerbi.com/beta/bfcf1d9d-93ea-43b1-b902-1daa68a64248/datasets/7e4e7bef-39fd-4825-acd8-4b0680079575/rows?key=qB%2BOaNFxazSGJOB%2BFrXLbKRUeV%2BpmKfY9xFooXHlhr9X5q7lcRqndhSyt42%2FeoDQdoQh%2Fcp12xJQ75zRzO2Y7w%3D%3D"
-
-}
+    public static POWERBI_HOST = "https://api.powerbi.com/beta/bfcf1d9d-93ea-43b1-b902-1daa68a64248/datasets/944fde71-3483-4da4-8358-d0fec27d9439/rows?key=1EyHXwtzUeZNkBg0IvqrL%2F2HJeDZWAa4HyGFosfwLO2S5jhZmu925bc4W69e1l8XjLSvcwTwk%2B7%2FjGocBmLOLw%3D%3D"}
