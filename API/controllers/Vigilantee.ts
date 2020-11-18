@@ -18,6 +18,7 @@ export class Vigilantee {
             Feedback  : pFeedback
         }
         mongoDriver.write("AlertMe", "Logs", log)
+        this.getIntersections()
     }
 
     public static getActivity(){
@@ -101,15 +102,15 @@ export class Vigilantee {
                             MongoDriver.getInstance().aggregate("AlertMe","Logs",getIntersect).then((inter:any)=>
                             {
                                 let result= inter[Constants.GEOPOSITIONAL_INDEX_RESULT]
-                                if((result!=null))
+                                if((result))
                                 {
                                     let numIntersec= result.count
-                                    if(numIntersec>1)
-                                    {             
+            
                                         let PowerBiData= [{'lat':currentCoordinates[1], 'long':currentCoordinates[0], "intersecs":numIntersec}]
                                         var stringifiedPowerBiData= JSON.stringify(PowerBiData)
                                         const powerBiRequest = request.post(Constants.POWERBI_HOST, stringifiedPowerBiData,
                                         (error, res, body) => {
+                                            console.log(`Status code: ${res.statusCode}`);
                                         });
                                         powerBiRequest.on('error', (e) => {
                                             console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
@@ -117,7 +118,7 @@ export class Vigilantee {
                                         powerBiRequest.write(stringifiedPowerBiData);
                                         powerBiRequest.end;
                                         intersections.push([currentCoordinates,numIntersec])
-                                    }
+                                    
                                 }  
                             })
                         });
