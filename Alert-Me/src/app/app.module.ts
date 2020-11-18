@@ -8,7 +8,9 @@ import { HomeComponent } from './home/home.component';
 import { WalkingPageComponent } from './home/walking-page/walking-page.component';
 import { FormsModule } from '@angular/forms';
 import { MapComponent } from './home/walking-page/map/map.component';
-import { AgmCoreModule } from '@agm/core'; 
+import { AgmCoreModule } from '@agm/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment'; 
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { AgmCoreModule } from '@agm/core';
     FormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC9_rLlv75KYZPqA5YXnSeB0i3UaaQ_61w'
-    })
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

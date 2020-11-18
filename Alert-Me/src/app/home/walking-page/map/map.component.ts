@@ -30,6 +30,12 @@ export class MapComponent implements OnInit {
 
   ID: string;
 
+  password: string;
+  passwordShowState: boolean = false;
+  failed: boolean = false;
+  finishedWalk: boolean = false;
+  @Input() typedPassword: string;
+
   feedback: string = '';
   feedbackModalState: boolean = false;
 
@@ -43,6 +49,8 @@ export class MapComponent implements OnInit {
     this.agmMap.triggerResize(true);
     this.zoom = 16;
     this.ID = '_' + Math.random().toString(36).substr(2, 9);
+    this.showModal();
+    //this.password = Math.random().toString(36).substr(2, 9);
   }
 
   async getLocation(){
@@ -95,13 +103,18 @@ export class MapComponent implements OnInit {
   }
 
 
-  //aqui esta la funcion con el timer
-
   startWalking(max: number){
 
     console.log('estoy caminando',max);
 
-    let interval = 12;
+    this.passwordShowState = true;
+
+    setTimeout(() => {
+      this.passwordShowState = false;
+
+    }, 10000);
+
+    let interval = 5;
 
     let timeXminute = 60 / interval;
 
@@ -113,6 +126,8 @@ export class MapComponent implements OnInit {
       setTimeout(() => {
         if(i+1 >= max * timeXminute || !this.isWalking ){
           this.stop.emit(false);
+          this.finishedWalk = true;
+          this.showModal();
         }
         else{
           this.getLocation();
@@ -138,6 +153,33 @@ export class MapComponent implements OnInit {
     else{
       that.timeLeft-= 1;
 
+    }
+  }
+
+  showModal(){
+    
+    ($('#staticBackdrop')as any).modal('show'); 
+  }
+
+  checkPassword(){
+    
+    if(!this.isWalking && !this.finishedWalk){
+      this.password = this.typedPassword;
+      $('#staticBackdrop').on('hidden.bs.modal', function (e) {
+        $(this)
+          .find("input,textarea,select")
+             .val('')
+             .end()
+          .find("input[type=checkbox], input[type=radio]")
+             .prop("checked", "")
+             .end();
+      })
+    }
+    else if(this.password === this.typedPassword){
+      console.log('listo')
+    }
+    else{
+      console.log('incorrecta');
     }
   }
 

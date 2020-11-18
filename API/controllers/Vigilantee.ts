@@ -1,6 +1,6 @@
 import {MongoDriver} from '.'
 import {Constants, Logger} from '../common'
-
+const request = require('request')
 export class Vigilantee {
     
     public static async alertMe(pGUID : any, pLat : any,pLng : any ,pCanton : any , pProvice : any, pStatus : any, pFeedback : any) {
@@ -98,11 +98,29 @@ export class Vigilantee {
                                     "$match": {"count":{"$gte":Constants.GEOPOSITIONAL_INTERSECTION_MINIMUM} } 
                                 } 
                             ]
-                              MongoDriver.getInstance().aggregate("AlertMe","Logs",getIntersect).then((inter:any)=>
+                            MongoDriver.getInstance().aggregate("AlertMe","Logs",getIntersect).then((inter:any)=>
+                            {
+                                let result= inter[Constants.GEOPOSITIONAL_INDEX_RESULT]
+                                if((result!=null))
                                 {
-                                  intersections.push([currentCoordinates,inter.count])
-                                })
-                            });
+                                    let numIntersec= result.count
+                                    if(numIntersec>1)
+                                    {             
+                                        let PowerBiData= [{'lat':currentCoordinates[1], 'long':currentCoordinates[0], "intersecs":numIntersec}]
+                                        var stringifiedPowerBiData= JSON.stringify(PowerBiData)
+                                        const powerBiRequest = request.post(Constants.POWERBI_HOST, stringifiedPowerBiData,
+                                        (error, res, body) => {
+                                        });
+                                        powerBiRequest.on('error', (e) => {
+                                            console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
+                                        });
+                                        powerBiRequest.write(stringifiedPowerBiData);
+                                        powerBiRequest.end;
+                                        intersections.push([currentCoordinates,numIntersec])
+                                    }
+                                }  
+                            })
+                        });
                         resolve(intersections)
                     }
                 )
