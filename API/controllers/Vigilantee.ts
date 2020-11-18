@@ -10,7 +10,7 @@ export class Vigilantee {
     
         let log = {
             GUID      : pGUID,
-            Location  : {type:"Point",coordinates:[pLng,pLat]},
+            Location  : {type:"Point",coordinates:[pLng, pLat]},
             Canton    : pCanton,
             Province  : pProvice,
             TimeStamp : timeStamp,
@@ -20,7 +20,7 @@ export class Vigilantee {
         mongoDriver.write("AlertMe", "Logs", log)
     }
 
-    public static getDailyActivity(weekday : number){
+    public static getActivity(){
         
         let mongoDriver = MongoDriver.getInstance()
 
@@ -28,34 +28,28 @@ export class Vigilantee {
         [
             {
                 $project:
-                    {
-                    hour: { $hour: "$TimeStamp" },
-                    weekDay: { $dayOfWeek: "$TimeStamp" }
-                    }
-            },
-            {
-                $match:
                 {
-                    weekDay : weekday
+                    hour: { $hour: "$date" },
+                    weekDay: { $dayOfWeek: "$date" }
                 }
             },
             {
                 $group:
                 {
-                    _id: { hour : "$hour" },
+                    _id: { weekDay: "$weekDay", hour : "$hour" },
                     count:{ $sum : 1 }
                 }
             },
             {
                 $sort : 
                 { 
-                    "_id.time" : 1
+                    "_id.weekDay" : 1,
+                    "_id.hour" : 1,
                 }
             }
-        
         ]
 
-        let dailyActivity = new Promise(
+        let activity = new Promise(
             (resolve, reject) => 
             {
                 try
@@ -70,55 +64,10 @@ export class Vigilantee {
             }
         );
 
-        return dailyActivity
+        return activity
 
     }
-    
-    public static getWeeklyActivity(){
 
-        let mongoDriver = MongoDriver.getInstance()
-
-        let query =
-        [
-            {
-            $project:
-                {
-                dayOfWeek: { $dayOfWeek: "$TimeStamp" }
-                }
-            },
-            {
-                $group: 
-                { 
-                _id:   {weekDay:"$dayOfWeek"}, 
-                count: { $sum: 1 }
-                } 
-            },     
-            {
-                $sort : 
-                { 
-                "_id.weekDay" : 1
-                }
-            }
-        ]
-
-        let dailyActivity = new Promise(
-            (resolve, reject) => 
-            {
-                try
-                {
-                    resolve(mongoDriver.aggregate('AlertMe', 'Logs', query))
-                }
-                catch (error)
-                {
-                    reject(error)
-                }
-                
-            }
-        );
-
-        return dailyActivity
-    }
-    
     public static async getIntersections(){
         let mongoDriver = MongoDriver.getInstance();
         let commonIntersections = new Promise(

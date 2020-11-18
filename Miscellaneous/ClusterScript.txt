@@ -157,4 +157,28 @@ docker start Curridabat_Server1
 docker start Zapote_Server2
 docker start alertmeRouter2
 
-
+db.dates.aggregate(
+  [
+    {
+      $project:
+      {
+        hour: { $hour: "$date" },
+        weekDay: { $dayOfWeek: "$date" }
+      }
+    },
+    {
+      $group:
+      {
+        _id: { weekDay: "$weekDay", hour : "$hour" },
+        count:{ $sum : 1 }
+      }
+    },
+    {
+      $sort : 
+      { 
+        "_id.weekDay" : 1,
+        "_id.hour" : 1,
+      }
+    }
+  ]
+);

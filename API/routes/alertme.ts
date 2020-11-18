@@ -14,24 +14,13 @@ app.post('/log/:guid/:lat/:lng/:Canton/:Provice/:status/:feedback?', async (req,
 )
 
 app.get('/info/getDaily/:day', async (req, res) => {
-  Vigilantee.getDailyActivity(+req.params.day)        // '+' operator casts the string parameter into number type
-  .then( 
-    (result) => {
-      res.send(result)
-    }
-  )
-}
-)
-
-
-app.get('/info/getWeekly', async (req, res) => {
-  Vigilantee.getWeeklyActivity()        // '+' operator casts the string parameter into number type
-  .then( 
-    (result) => {
-      res.send(result)
-    }
-  )
-}
+    Vigilantee.getActivity()        // '+' operator casts the string parameter into number type
+    .then( 
+        (result) => {
+          res.send(result)
+        }
+      )
+  }
 )
 
 // Test query - fully functioning
