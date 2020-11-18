@@ -163,7 +163,43 @@ db.dates.aggregate(
       $project:
       {
         hour: { $hour: "$date" },
-        weekDay: { $dayOfWeek: "$date" }
+        weekDay:         
+        {
+          $switch:
+          {
+            branches: [
+              {
+                case: { $eq : [ { $dayOfWeek : "$date" }, 1 ] },
+                then: "Domingo"
+              },
+              {
+                case: { $eq : [ { $dayOfWeek : "$date" }, 2 ] },
+                then: "Lunes"
+              },
+              {
+                case: { $eq : [ { $dayOfWeek : "$date" }, 3 ] },
+                then: "Martes"
+              },
+              {
+                case: { $eq : [ { $dayOfWeek : "$date" }, 4 ] },
+                then: "Miércoles"
+              },
+              {
+                case: { $eq : [ { $dayOfWeek : "$date" }, 5 ] },
+                then: "Jueves"
+              },
+              {
+                case: { $eq : [ { $dayOfWeek : "$date" }, 6 ] },
+                then: "Viernes"
+              },
+              {
+                case: { $eq : [ { $dayOfWeek : "$date" }, 7 ] },
+                then: "Sábado"
+              },                                                                                    
+            ],
+            default: { $dayOfWeek : "$date" }
+          }
+        }
       }
     },
     {

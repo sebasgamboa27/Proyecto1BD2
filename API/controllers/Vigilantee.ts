@@ -6,7 +6,7 @@ export class Vigilantee {
     public static async alertMe(pGUID : any, pLat : any,pLng : any ,pCanton : any , pProvice : any, pStatus : any, pFeedback : any) {
         let mongoDriver = MongoDriver.getInstance()
 
-        let timeStamp = new Date()
+        let timeStamp = new TimeStamp()
     
         let log = {
             GUID      : pGUID,
@@ -28,27 +28,63 @@ export class Vigilantee {
         let query =      
         [
             {
-                $project:
+              $project:
+              {
+                hour: { $hour: "$TimeStamp" },
+                weekDay:         
                 {
-                    hour: { $hour: "$date" },
-                    weekDay: { $dayOfWeek: "$date" }
+                  $switch:
+                  {
+                    branches: [
+                      {
+                        case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 1 ] },
+                        then: "Domingo"
+                      },
+                      {
+                        case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 2 ] },
+                        then: "Lunes"
+                      },
+                      {
+                        case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 3 ] },
+                        then: "Martes"
+                      },
+                      {
+                        case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 4 ] },
+                        then: "Miércoles"
+                      },
+                      {
+                        case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 5 ] },
+                        then: "Jueves"
+                      },
+                      {
+                        case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 6 ] },
+                        then: "Viernes"
+                      },
+                      {
+                        case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 7 ] },
+                        then: "Sábado"
+                      },                                                                                    
+                    ],
+                    default: { $dayOfWeek : "$TimeStamp" }
+                  }
                 }
+              }
             },
             {
-                $group:
-                {
-                    _id: { weekDay: "$weekDay", hour : "$hour" },
-                    count:{ $sum : 1 }
-                }
+              $group:
+              {
+                _id: { weekDay: "$weekDay", hour : "$hour" },
+                count:{ $sum : 1 }
+              }
             },
             {
-                $sort : 
-                { 
-                    "_id.weekDay" : 1,
-                    "_id.hour" : 1,
-                }
+              $sort : 
+              { 
+                "_id.weekDay" : 1,
+                "_id.hour" : 1,
+              }
             }
-        ]
+          ]
 
         let activity = new Promise(
             (resolve, reject) => 
