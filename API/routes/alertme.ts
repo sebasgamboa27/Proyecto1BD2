@@ -13,36 +13,4 @@ app.post('/log/:guid/:lat/:lng/:Canton/:Provice/:status/:feedback?', async (req,
   }
 )
 
-app.get('/info/getDaily/:day', async (req, res) => {
-    Vigilantee.getActivity()        // '+' operator casts the string parameter into number type
-    .then( 
-        (result) => {
-          res.send(result)
-        }
-      )
-  }
-)
-
-// Test query - fully functioning
-app.get('/info/test', async (req, res) => {
-  
-    MongoDriver.getInstance().find('AlertMe', 'Logs', { Canton : "Naranjo"})
-    .then
-    (
-      (result : any)=>
-      {
-        res.send(result)
-      }
-    )
-    .catch
-    (
-      (error) =>
-      {
-        Logger.error("en route")
-        Logger.error(error)
-      }
-    )
-  }
-)
-
 export default app 

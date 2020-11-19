@@ -6,7 +6,7 @@ export class Vigilantee {
     public static async alertMe(pGUID : any, pLat : any,pLng : any ,pCanton : any , pProvice : any, pStatus : any, pFeedback : any) {
         let mongoDriver = MongoDriver.getInstance()
 
-        let timeStamp = new TimeStamp()
+        let timeStamp = new Date()
     
         let log = {
             GUID      : pGUID,

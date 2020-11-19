@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MapComponent } from './map/map.component';
+import {Constants} from 'src/common/index'
 
 @Component({
   selector: 'app-walking-page',
@@ -34,7 +35,7 @@ export class WalkingPageComponent implements OnInit {
 
   stopWalking(){
     this.isWalking = false;
-    console.log('stop walking, arrived');
+    console.log(Constants.ARRIVED_MSG);
   }
 
   
