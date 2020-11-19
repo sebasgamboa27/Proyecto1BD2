@@ -18,9 +18,11 @@
     "@types/mongoose": "^5.7.36",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "cpu-stats": "^1.0.0",
     "express": "^4.17.1",
     "get-json": "^1.0.1",
     "mongoose": "^5.10.9",
+    "node-cron": "^2.0.3",
     "request": "^2.88.2"
   },
   "devDependencies": {
