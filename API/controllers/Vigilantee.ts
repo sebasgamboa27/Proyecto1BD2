@@ -78,6 +78,14 @@ export class Vigilantee {
               }
             },
             {
+              $project:
+              {
+                weekDay: "$_id.weekDay",
+                hour: "$_id.hour",
+                count: "$count"
+              }
+            }, 
+            {
               $sort : 
               { 
                 "_id.weekDay" : 1,

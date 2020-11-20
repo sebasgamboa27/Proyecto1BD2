@@ -205,10 +205,18 @@ db.dates.aggregate(
     {
       $group:
       {
-        _id: { weekDay: "$weekDay", hour : "$hour" },
-        count:{ $sum : 1 }
+        _id : { weekDay: "$weekDay", hour : "$hour" },
+        count : { $sum : 1 }
       }
     },
+    {
+      $project:
+      {
+        weekDay: "$_id.weekDay",
+        hour: "$_id.hour",
+        count: "$count"
+      }
+    }, 
     {
       $sort : 
       { 
