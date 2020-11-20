@@ -112,24 +112,30 @@ export class Vigilantee {
                 
             }
         );
-        activity.then(activities=>{
-          console.log(activities);
-          
-          let PowerBiData= activities
-          var stringifiedPowerBiData= JSON.stringify(PowerBiData)
-          const powerBiRequest = request.post(Constants.POWERBI_HOST_WEEKLY, stringifiedPowerBiData,
-          (error, res, body) => {
-            console.log(res.statusCode());
-            
-          });
-          powerBiRequest.on('error', (e) => {
-              console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
-          });
-          powerBiRequest.write(stringifiedPowerBiData);
-          powerBiRequest.end;
-          
-        })
+        activity.then(ResultadoSemanal=>{
+          for (let i = 0;true;i++)
+          {
+            let ResultadoDiario = ResultadoSemanal[i]    
+            if(!ResultadoDiario)
+            {
+              break;
+            }
+            let PowerBiData= [{'weekDay':ResultadoDiario.weekDay, 'hour':ResultadoDiario.hour, "count":ResultadoDiario.count}]
 
+            var stringifiedPowerBiData= JSON.stringify(PowerBiData)
+            const powerBiRequest = request.post(Constants.POWERBI_HOST_WEEKLY, stringifiedPowerBiData,
+            (error, res, body) => {
+            console.log(res.statusCode);
+
+            });
+            powerBiRequest.on('error', (e) => {
+            console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
+            });
+            powerBiRequest.write(stringifiedPowerBiData);
+            powerBiRequest.end;
+
+          }       
+        })
         return activity
 
     }

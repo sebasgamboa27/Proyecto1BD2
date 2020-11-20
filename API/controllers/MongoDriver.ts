@@ -21,9 +21,9 @@ export class MongoDriver {
         const database = MongoDriver.instance.client.db(pDatabase);
         const collection = database.collection(pCollection);
         collection.insertOne(pDocument).then((result : any) => {
-
           resolve();
         });
+        
 
     } catch (err) {
       Logger.error(err)
