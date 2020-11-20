@@ -16,14 +16,13 @@ export class MongoDriver {
   }
 
   // Assumes the connection is already open
-  public async write(pDatabase : string, pCollection : string, pDocument : any){
+  public write(pDatabase : string, pCollection : string, pDocument : any,resolve:any){
       try {
         const database = MongoDriver.instance.client.db(pDatabase);
         const collection = database.collection(pCollection);
         collection.insertOne(pDocument).then((result : any) => {
-          Logger.info(
-            `${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`,
-          );
+
+          resolve();
         });
 
     } catch (err) {

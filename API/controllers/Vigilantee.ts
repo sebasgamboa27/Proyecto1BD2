@@ -3,22 +3,26 @@ import {Constants, Logger} from '../common'
 const request = require('request')
 export class Vigilantee {
     
-    public static async alertMe(pGUID : any, pLat : any,pLng : any ,pCanton : any , pProvice : any, pStatus : any, pFeedback : any) {
-        let mongoDriver = MongoDriver.getInstance()
+    public static alertMe(pGUID : any, pLat : any,pLng : any ,pCanton : any , pProvice : any, pStatus : any, pFeedback : any) {
+        return new Promise((resolve,reject)=>{
+          let mongoDriver = MongoDriver.getInstance()
 
-        let timeStamp = new Date()
-    
-        let log = {
-            GUID      : pGUID,
-            Location  : {type:"Point",coordinates:[pLng, pLat]},
-            Canton    : pCanton,
-            Province  : pProvice,
-            TimeStamp : timeStamp,
-            Status    : pStatus,
-            Feedback  : pFeedback
-        }
-        mongoDriver.write("AlertMe", "Logs", log)
-        this.getIntersections()
+          let timeStamp = new Date()
+          
+          let log = {
+              GUID      : pGUID,
+              Location  : {type:"Point",coordinates:[pLng, pLat]},
+              Canton    : pCanton,
+              Province  : pProvice,
+              TimeStamp : timeStamp,
+              Status    : pStatus,
+              Feedback  : pFeedback
+          }
+          
+          mongoDriver.write("AlertMe", "Logs", log,resolve)
+
+        })
+
     }
 
     public static getActivity(){
@@ -109,10 +113,14 @@ export class Vigilantee {
             }
         );
         activity.then(activities=>{
-          let PowerBiData= [activities]
+          console.log(activities);
+          
+          let PowerBiData= activities
           var stringifiedPowerBiData= JSON.stringify(PowerBiData)
           const powerBiRequest = request.post(Constants.POWERBI_HOST_WEEKLY, stringifiedPowerBiData,
           (error, res, body) => {
+            console.log(res.statusCode());
+            
           });
           powerBiRequest.on('error', (e) => {
               console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
