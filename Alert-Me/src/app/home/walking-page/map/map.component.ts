@@ -45,7 +45,7 @@ export class MapComponent implements OnInit {
 
   @ViewChild(AgmMap,{static: true}) public agmMap: AgmMap;
 
-  ngOnInit(): void 
+  ngOnInit(): void
   {
     this.getLocation()
     this.agmMap.triggerResize(true);
@@ -61,9 +61,9 @@ export class MapComponent implements OnInit {
     if (navigator.geolocation)
     {
       navigator.geolocation.getCurrentPosition(
-        async (position : Position) => 
+        async (position : Position) =>
         {
-          if (position) 
+          if (position)
           {
             this.lat = position.coords.latitude;
             this.lng = position.coords.longitude;
@@ -71,28 +71,25 @@ export class MapComponent implements OnInit {
             console.log(position);
             this.apiloader.load()
             .then(
-              () => 
+              () =>
               {
                 let geocoder = new google.maps.Geocoder;
-                let latlng = 
+                let latlng =
                 {
                   lat: this.lat, lng: this.lng
                 };
                 let that = this;
-                geocoder.geocode({'location': latlng}, 
-                  (results, status) => 
+                geocoder.geocode({'location': latlng},
+                  (results, status) =>
                   {
                     if (results[0])
                     {
                       let currentLocation = results[0].formatted_address;
                       this.currentAdressString = currentLocation;
 
-                      console.log(this.currentAdressString);
-
                       //esta es la llamada para la base de datos
                       let newAddressString = this.currentAdressString.split(Constants.LOCATION_SPLIT_CHARS);
-                      console.log(newAddressString,'yesss');
-                      
+
                       let province = newAddressString[Constants.PROVINCE_LOCATION_INDEX];
                       let canton = newAddressString[Constants.CANTON_LOCATION_INDEX];
 
@@ -105,8 +102,8 @@ export class MapComponent implements OnInit {
 
                       console.log([this.ID,this.lat.toString(),this.lng.toString(),province,canton],'Esto se envia a la bd');
                       this.database.insertLocation(this.ID, this.lat.toString(), this.lng.toString(), province, canton, status, null);
-                    } 
-                    else 
+                    }
+                    else
                     {
                       console.log('Not found');
                     }
@@ -129,7 +126,7 @@ export class MapComponent implements OnInit {
     this.passwordShowState = true;
 
     setTimeout(
-    () => 
+    () =>
     {
       this.passwordShowState = false;
     }
@@ -143,10 +140,10 @@ export class MapComponent implements OnInit {
 
     this.timeInterval = setInterval(this.decreaseTime, 1000, this);
 
-    for (let counter = 0; counter < minutesQuantity * locationsPerMinute; counter++) 
+    for (let counter = 0; counter < minutesQuantity * locationsPerMinute; counter++)
     {
       setTimeout(
-        () => 
+        () =>
         {
           if(counter + 1 >= minutesQuantity * locationsPerMinute || !this.isWalking )
           {
@@ -185,8 +182,8 @@ export class MapComponent implements OnInit {
 
   showModal()
   {
-    
-    ($('#staticBackdrop')as any).modal('show'); 
+
+    ($('#staticBackdrop')as any).modal('show');
   }
 
   checkPassword()
@@ -195,8 +192,8 @@ export class MapComponent implements OnInit {
     {
       this.password = this.typedPassword;
       $('#staticBackdrop')
-      .on('hidden.bs.modal', 
-        function (e) 
+      .on('hidden.bs.modal',
+        function (e)
         {
           $(this)
             .find("input,textarea,select")

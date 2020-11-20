@@ -1,4 +1,6 @@
 import App from './app';
+const publicIp = require('public-ip');
+var geoip = require('geoip-lite');
 import * as http from 'http';
 import { Logger, Constants } from './common';
 import { MongoDriver } from './controllers';
@@ -13,7 +15,6 @@ const server = http.createServer(App);
 server.listen(port);
 App.use(cors());
 MongoDriver.getInstance()
-
 server.on('listening', function(): void {
     let addr = server.address();
     let bind = (typeof addr === 'string') ? `pipe ${addr}` : `port ${addr.port}`;
@@ -41,10 +42,7 @@ cron.schedule('*/5 * * * * *', function() {
             console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
         });
         powerBiRequest.write(stringifiedPowerBiData);
-        powerBiRequest.end;
-        
-
-        
+        powerBiRequest.end;     
   });
 });
   
