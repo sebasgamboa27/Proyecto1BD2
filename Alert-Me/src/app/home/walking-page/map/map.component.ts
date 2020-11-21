@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import {AgmMap,MapsAPILoader } from '@agm/core';
 import { DatabaseService } from 'src/app/database.service';
 import {Constants} from 'src/common/index'
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-map',
@@ -50,7 +51,7 @@ export class MapComponent implements OnInit {
     this.getLocation()
     this.agmMap.triggerResize(true);
     this.zoom = Constants.MAP_ZOOM;
-    this.ID = '_' + Math.random().toString(36).substr(2, 9); // TODO: Esto tiene que ser un GUID
+    this.ID = uuidv4(); // TODO: Esto tiene que ser un GUID
     this.showModal();
     //this.password = Math.random().toString(36).substr(2, 9);
   }
