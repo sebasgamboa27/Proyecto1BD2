@@ -121,7 +121,8 @@ export class Vigilantee {
                 let intersections: any = [];
                 try
                 {
-                mongoDriver.find("AlertMe","Logs","").then(logs=>
+                mongoDriver.find("AlertMe","Logs","").then( 
+                  (logs : any) =>
                     {
                         let keys = Object.keys(logs);
                         keys.forEach(key => {
@@ -137,7 +138,7 @@ export class Vigilantee {
                                     }  
                                 },
                                 {
-                                    $group : {_id:null,count:{$sum:1}}
+                                    $group : {_id : null, count : { $sum : 1 }}
                                 },
                                 {
                                     "$match": {"count":{"$gte":Constants.GEOPOSITIONAL_INTERSECTION_MINIMUM} } 
@@ -153,9 +154,9 @@ export class Vigilantee {
                                         let PowerBiData= [{'lat':currentCoordinates[1], 'long':currentCoordinates[0], "intersections":numIntersec}]
                                         var stringifiedPowerBiData= JSON.stringify(PowerBiData)
                                         const powerBiRequest = request.post(Constants.POWERBI_HOST, stringifiedPowerBiData,
-                                        (error, res, body) => {
+                                        (error : any, res : any, body : any) => {
                                         });
-                                        powerBiRequest.on('error', (e) => {
+                                        powerBiRequest.on('error', (e : any) => {
                                             console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
                                         });
                                         powerBiRequest.write(stringifiedPowerBiData);
