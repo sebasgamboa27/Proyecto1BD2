@@ -19,10 +19,14 @@ app.post('/log/:guid/:lat/:lng/:Canton/:Provice/:status/:feedback?',
 )
 
 app.post('/simulate', 
-  async (req, res) => {
-    
-    res.send(new Date())
-  }
+async (req, res) => {
+  SimulationController.simulateLog()
+  .then(
+    ()=>{
+      res.json({ok:1})
+    }
+  )
+}
 )
 
 export default app 
