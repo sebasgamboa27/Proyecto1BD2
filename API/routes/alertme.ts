@@ -9,6 +9,7 @@ const router = express.Router();
 //Request principal
 app.post('/log/:guid/:lat/:lng/:Canton/:Provice/:status/:feedback?',
   async (req, res) => {
+    
     Vigilantee.alertMe(req.params)
     .then(
       ()=>{
@@ -28,5 +29,11 @@ async (req, res) => {
   )
 }
 )
+
+app.get('/powerbi',(req,res)=>
+{
+
+  Vigilantee.getActivity();
+})
 
 export default app 
