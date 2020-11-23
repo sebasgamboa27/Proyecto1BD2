@@ -32,7 +32,35 @@ app.post('/simulate',
 
 app.get('/intersections',(req,res)=>
 {
-  Vigilantee.getIntersections()
+  Vigilantee.getIntersections().then(intersecciones=>
+    {
+      let powerbiArray = []
+      for (let i = 0;true;i++)
+      {
+        let interseccion = intersecciones[i]    
+        if(!interseccion)
+        {
+          break;
+        } 
+        let PowerBiData= {'lat':interseccion[0][1], 'long':interseccion[0][0], "intersections":interseccion[1]}
+        powerbiArray.push(PowerBiData)
+        
+      }
+      var stringifiedPowerBiData= JSON.stringify(powerbiArray)
+      const powerBiRequest = request.post(Constants.POWERBI_HOST, stringifiedPowerBiData,
+      (error : any, res : any, body : any) => {
+        console.log(    res.statusCode);
+     
+      });
+      powerBiRequest.on('error', (e : any) => {
+          console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
+      });
+      powerBiRequest.write(stringifiedPowerBiData);
+      powerBiRequest.end;
+      }
+      
+      
+    )
 })
 app.get('/uses',(req,res)=>
 {

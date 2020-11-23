@@ -127,12 +127,14 @@ export class Vigilantee {
                 {
                 mongoDriver.find("AlertMe","Logs","").then( 
                   (logs : any) =>
-                    {
+                    {    
                         let keys = Object.keys(logs);
-                        console.log(keys.length);
+                        console.log();
+                        
+                        let totalLogs =keys.length;
                         
                         keys.forEach(
-                          async (key) => 
+                          (key,index) => 
                           {
                             let currentCoordinates= logs[key].Location.coordinates
                             let getIntersect =
@@ -160,36 +162,18 @@ export class Vigilantee {
                                 if((result))
                                 {
                                     let numIntersec= result.count
-                                    try{
-                                    let PowerBiData= [{'lat':currentCoordinates[1], 'long':currentCoordinates[0], "intersections":numIntersec}]
-                                    var stringifiedPowerBiData= JSON.stringify(PowerBiData)
-                                    const powerBiRequest = request.post(Constants.POWERBI_HOST, stringifiedPowerBiData,
-                                    (error : any, res : any, body : any) => {
-                                    });
-                                    powerBiRequest.on('error', (e : any) => {
-                                        console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
-                                    });
-                                    powerBiRequest.write(stringifiedPowerBiData);
-                                    powerBiRequest.end;
-                                    }
-                                    catch(error)
-                                    {
-                                    console.log("Error",error);
-                                    
-                                    }
                                     intersections.push([currentCoordinates,numIntersec])
+                                    if(index==totalLogs-1)
+                                    {
+                                      resolve(intersections)
+                                    }
                                     
                                 }  
                               }
-                            ).catch(error =>
-                              {
-                                Logger.error(Constants.POWERBI_DATAPUSH_ERROR_MSG)
-                              })
+                            )
                         }
                       );
                       console.log("Terminó");
-                      
-                        resolve(intersections)
                     }
                 )
                 }
