@@ -15,8 +15,8 @@ export class Vigilantee {
               Canton    : insertLog.Canton,
               Province  : insertLog.Provice,
               TimeStamp : timeStamp,
-              Status    : insertLog.Status,
-              Feedback  : insertLog.Feedback
+              Status    : insertLog.status,
+              Feedback  : insertLog.feedback
           }
           console.log(log);
           
