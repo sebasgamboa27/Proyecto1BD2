@@ -113,43 +113,6 @@ export class Vigilantee {
                 
             }
         );
-        activity.then((ResultadoSemanal : any)=>{
-          for (let i = 0;true;i++)
-          {
-            let ResultadoDiario = ResultadoSemanal[i]    
-            if(!ResultadoDiario)
-            {
-              break;
-            }
-            try
-            {
-
-            
-            let PowerBiData= [{'weekDay':ResultadoDiario.weekDay, 'hour':ResultadoDiario.hour, "count":ResultadoDiario.count}]
-
-            var stringifiedPowerBiData= JSON.stringify(PowerBiData)
-            const powerBiRequest = request.post(Constants.POWERBI_HOST_WEEKLY, stringifiedPowerBiData,
-            (error : any, res : any, body : any) => {
-            console.log(res.statusCode);
-
-            });
-            powerBiRequest.on('error', (e : any) => {
-            console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
-            });
-            powerBiRequest.write(stringifiedPowerBiData);
-            powerBiRequest.end;
-            }
-            catch(error)
-            {
-              Logger.error(error)
-            }
-
-          }       
-        }).catch(error=>
-          {
-            console.log(error);
-            
-          })
         return activity
 
     }
@@ -166,6 +129,8 @@ export class Vigilantee {
                   (logs : any) =>
                     {
                         let keys = Object.keys(logs);
+                        console.log(keys.length);
+                        
                         keys.forEach(
                           async (key) => 
                           {
