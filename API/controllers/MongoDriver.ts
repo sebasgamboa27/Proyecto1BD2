@@ -28,7 +28,6 @@ export class MongoDriver {
       Logger.error(err)
     }
   }
-
   public find(pDatabase : string, pCollection : string, pQuery : any)
   {
     let findResult = new Promise(

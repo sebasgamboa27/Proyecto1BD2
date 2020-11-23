@@ -121,6 +121,10 @@ export class Vigilantee {
             {
               break;
             }
+            try
+            {
+
+            
             let PowerBiData= [{'weekDay':ResultadoDiario.weekDay, 'hour':ResultadoDiario.hour, "count":ResultadoDiario.count}]
 
             var stringifiedPowerBiData= JSON.stringify(PowerBiData)
@@ -134,14 +138,23 @@ export class Vigilantee {
             });
             powerBiRequest.write(stringifiedPowerBiData);
             powerBiRequest.end;
+            }
+            catch(error)
+            {
+              Logger.error(error)
+            }
 
           }       
-        })
+        }).catch(error=>
+          {
+            console.log(error);
+            
+          })
         return activity
 
     }
 
-    public static async getIntersections(){
+    public static getIntersections(){
         let mongoDriver = MongoDriver.getInstance();
         let commonIntersections = new Promise(
             (resolve, reject) => 
@@ -154,7 +167,7 @@ export class Vigilantee {
                     {
                         let keys = Object.keys(logs);
                         keys.forEach(
-                          (key) => 
+                          async (key) => 
                           {
                             let currentCoordinates= logs[key].Location.coordinates
                             let getIntersect =
@@ -182,24 +195,35 @@ export class Vigilantee {
                                 if((result))
                                 {
                                     let numIntersec= result.count
-            
-                                        let PowerBiData= [{'lat':currentCoordinates[1], 'long':currentCoordinates[0], "intersections":numIntersec}]
-                                        var stringifiedPowerBiData= JSON.stringify(PowerBiData)
-                                        const powerBiRequest = request.post(Constants.POWERBI_HOST, stringifiedPowerBiData,
-                                        (error : any, res : any, body : any) => {
-                                        });
-                                        powerBiRequest.on('error', (e : any) => {
-                                            console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
-                                        });
-                                        powerBiRequest.write(stringifiedPowerBiData);
-                                        powerBiRequest.end;
-                                        intersections.push([currentCoordinates,numIntersec])
+                                    try{
+                                    let PowerBiData= [{'lat':currentCoordinates[1], 'long':currentCoordinates[0], "intersections":numIntersec}]
+                                    var stringifiedPowerBiData= JSON.stringify(PowerBiData)
+                                    const powerBiRequest = request.post(Constants.POWERBI_HOST, stringifiedPowerBiData,
+                                    (error : any, res : any, body : any) => {
+                                    });
+                                    powerBiRequest.on('error', (e : any) => {
+                                        console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
+                                    });
+                                    powerBiRequest.write(stringifiedPowerBiData);
+                                    powerBiRequest.end;
+                                    }
+                                    catch(error)
+                                    {
+                                    console.log("Error",error);
+                                    
+                                    }
+                                    intersections.push([currentCoordinates,numIntersec])
                                     
                                 }  
                               }
-                            )
+                            ).catch(error =>
+                              {
+                                Logger.error(Constants.POWERBI_DATAPUSH_ERROR_MSG)
+                              })
                         }
                       );
+                      console.log("Terminó");
+                      
                         resolve(intersections)
                     }
                 )
@@ -211,5 +235,6 @@ export class Vigilantee {
 
             }
         )
+        return commonIntersections
     }
 }

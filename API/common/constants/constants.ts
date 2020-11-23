@@ -26,7 +26,7 @@ export class Constants {
 
     public static GEOPOSITIONAL_INDEX_RESULT = 0
 
-    public static CPU_CORE_COUNT = 8
+    public static CPU_CORE_COUNT = 4
 
     public static BYTES_TO_GIGABYTES_DIVISION = 10**9
 
@@ -45,13 +45,31 @@ export class Constants {
     public static NARANJO_REFERENCE_LAT  = 10.098653036952612
     public static NARANJO_REFERENCE_LONG = -84.38096523693127
 
+    public static NARANJO_REFERENCE_LAT_2  = 10.108316
+    public static NARANJO_REFERENCE_LONG_2 = -84.361839
+  
+    public static NARANJO_REFERENCE_LAT_3  = 10.069147
+    public static NARANJO_REFERENCE_LONG_3 = -84.362484
+
     public static CURRIDABAT_REFERENCE_LAT  = 9.916807618997785
     public static CURRIDABAT_REFERENCE_LONG = -84.03475174367235
 
+    public static CURRIDABAT_REFERENCE_LAT_2  =   9.912296
+    public static CURRIDABAT_REFERENCE_LONG_2 = -84.039414
+
+    public static CURRIDABAT_REFERENCE_LAT_3  =  9.908586
+    public static CURRIDABAT_REFERENCE_LONG_3 = -84.043902
+  
     public static ZAPOTE_REFERENCE_LAT  = 9.92108221025653
     public static ZAPOTE_REFERENCE_LONG = -84.06008716251051
+    
+    public static ZAPOTE_REFERENCE_LAT_2  = 9.921294
+    public static ZAPOTE_REFERENCE_LONG_2 = -84.068488
 
-    public static RADIUS_PER_CANTON = 1000 * 10
+    public static ZAPOTE_REFERENCE_LAT_3  = 9.922809
+    public static ZAPOTE_REFERENCE_LONG_3 = -84.072333
+
+    public static RADIUS_PER_CANTON = 100 * 10
 
     public static DANGER_HOUR_BEGIN = 21
     public static DANGER_HOUR_DURATION = 6

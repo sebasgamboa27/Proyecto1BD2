@@ -29,9 +29,13 @@ app.post('/simulate',
   }
 )
 
-app.get('/powerbi',(req,res)=>
+app.get('/intersections',(req,res)=>
 {
-  Vigilantee.getIntersections();
+  Vigilantee.getIntersections()
+})
+app.get('/uses',(req,res)=>
+{
+
   Vigilantee.getActivity();
 })
 

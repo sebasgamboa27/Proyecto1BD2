@@ -25,7 +25,7 @@ export class SimulationController {
                 
                 let log = {
                     GUID      : "ConstantGUID",
-                    Location  : {type:"Point",coordinates:[+coordinates.latitude, +coordinates.longitude]},
+                    Location  : {type:"Point",coordinates:[+coordinates.longitude, +coordinates.latitude]},
                     Canton    : canton,
                     Province  : province,
                     TimeStamp : timeStamp,
@@ -61,23 +61,78 @@ export class SimulationController {
         let province : string
         let canton : string
 
-        if (locationRandom < 20)
+        if (locationRandom <33)
         {
-            province = "Alajuela"
-            canton = "Naranjo"
-            referencePoint = { latitude : Constants.NARANJO_REFERENCE_LAT, longitude : Constants.NARANJO_REFERENCE_LONG }
+            console.log("Naranjo");
+            
+            if (locationRandom<11)
+            {
+                province = "Alajuela"
+                canton = "Naranjo"
+                referencePoint = { latitude : Constants.NARANJO_REFERENCE_LAT, longitude : Constants.NARANJO_REFERENCE_LONG }
+            }
+            else if (locationRandom<11)
+            {
+                province = "Alajuela"
+                canton = "Naranjo"
+                referencePoint = { latitude : Constants.NARANJO_REFERENCE_LAT_2, longitude : Constants.NARANJO_REFERENCE_LONG_2 }
+            }
+            else
+            {
+                province = "Alajuela"
+                canton = "Naranjo"
+                referencePoint = { latitude : Constants.NARANJO_REFERENCE_LAT_3, longitude : Constants.NARANJO_REFERENCE_LONG_3 }
+            }
+
         }
-        else if (locationRandom < 60)
+        else if (locationRandom < 66)
         {   
-            province = "Alajuela"
-            canton = "Zapote"
-            referencePoint = { latitude : Constants.CURRIDABAT_REFERENCE_LAT, longitude : Constants.CURRIDABAT_REFERENCE_LONG }
+            console.log("Curri");
+            if (locationRandom<44)
+            {
+
+                
+                province = "San José"
+                canton = "Curridabat"
+                referencePoint = { latitude : Constants.CURRIDABAT_REFERENCE_LAT, longitude : Constants.CURRIDABAT_REFERENCE_LONG }
+            }
+            else if (locationRandom<55)
+            {
+                province = "San José"
+                canton = "Curridabat"
+                referencePoint = { latitude : Constants.CURRIDABAT_REFERENCE_LAT_2, longitude : Constants.CURRIDABAT_REFERENCE_LONG_2 }
+            }
+            else
+            {
+                province = "San José"
+                canton = "Curridabat"
+                referencePoint = { latitude : Constants.CURRIDABAT_REFERENCE_LAT_3, longitude : Constants.CURRIDABAT_REFERENCE_LONG_3 }
+            }
+
         }
         else
         {
-            province = "Alajuela"
-            canton = "Curridabat"
-            referencePoint = { latitude : Constants.ZAPOTE_REFERENCE_LAT, longitude : Constants.ZAPOTE_REFERENCE_LAT }
+            console.log("Zapote");
+            
+            if (locationRandom<77)
+            {
+                province = "San José"
+                canton = "Zapote"
+                referencePoint = { latitude : Constants.ZAPOTE_REFERENCE_LAT, longitude : Constants.ZAPOTE_REFERENCE_LAT }
+            }
+            else if (locationRandom<88)
+            {
+                province = "San José"
+                canton = "Zapote"
+                referencePoint = { latitude : Constants.ZAPOTE_REFERENCE_LAT_2, longitude : Constants.ZAPOTE_REFERENCE_LAT_2 }
+            }
+            else
+            {
+                province = "San José"
+                canton = "Zapote"
+                referencePoint = { latitude : Constants.ZAPOTE_REFERENCE_LAT_3, longitude : Constants.ZAPOTE_REFERENCE_LAT_3 }
+            }
+
         }
 
         return [randomLocation.randomCirclePoint(referencePoint, Constants.RADIUS_PER_CANTON), province, canton]
