@@ -3,21 +3,23 @@ import {Constants, Logger} from '../common'
 const request = require('request')
 export class Vigilantee {
     
-    public static alertMe(pGUID : any, pLat : any,pLng : any ,pCanton : any , pProvice : any, pStatus : any, pFeedback : any) {
+    public static alertMe(insertLog:any) {
         return new Promise((resolve,reject)=>{
           let mongoDriver = MongoDriver.getInstance()
 
           let timeStamp = new Date()
           
           let log = {
-              GUID      : pGUID,
-              Location  : {type:"Point",coordinates:[pLng, pLat]},
-              Canton    : pCanton,
-              Province  : pProvice,
+              GUID      : insertLog.guid,
+              Location  : {type:"Point",coordinates:[insertLog.lng, insertLog.lat]},
+              Canton    : insertLog.Canton,
+              Province  : insertLog.Provice,
               TimeStamp : timeStamp,
-              Status    : pStatus,
-              Feedback  : pFeedback
+              Status    : insertLog.Status,
+              Feedback  : insertLog.Feedback
           }
+          console.log(log);
+          
           
           mongoDriver.write("AlertMe", "Logs", log,resolve)
 
