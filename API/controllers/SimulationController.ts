@@ -25,7 +25,7 @@ export class SimulationController {
                 
                 let log = {
                     GUID      : "ConstantGUID",
-                    Location  : {type:"Point",coordinates:[coordinates.latitude, coordinates.longitude]},
+                    Location  : {type:"Point",coordinates:[+coordinates.latitude, +coordinates.longitude]},
                     Canton    : canton,
                     Province  : province,
                     TimeStamp : timeStamp,
@@ -45,7 +45,7 @@ export class SimulationController {
     public static simulateTimeStamp(){
 
         let hour = this.getProbabilisticSplittedIntRange(Constants.DANGER_HOUR_BEGIN, Constants.DANGER_HOUR_DURATION, 0, 24, Constants.NON_DANGER_PROBABILITY).toString().padStart(2,'0')
-        let day = this.getProbabilisticSplittedIntRange(Constants.ACTIVITY_DAYS_BEGIN, Constants.ACTIVITY_DAYS_DURATION, 0, 7, Constants.NON_ACTIVITY_PROBABILITY)
+        let day = this.getProbabilisticSplittedIntRange(Constants.ACTIVITY_DAYS_BEGIN, Constants.ACTIVITY_DAYS_DURATION, 0, 7, Constants.NON_ACTIVITY_PROBABILITY).toString().padStart(2,'0')
 
         return `2020-11-${day}T${hour}:00:54.280Z` // En noviembre 2020 hubo un domingo 1 xd
 

@@ -14,11 +14,8 @@ export class DatabaseService {
   constructor(private http: HttpClient) {}
 
 
-  //Este es un ejemplo de peticion al API, estas son las funciones para pedirle al API que traiga cosas, o que haga cosas
-
   async insertLocation(id : string, lat : string, lng : string, province : string, canton : string, status : number, feeback : number) {
     return await fetch(`http://25.10.118.245:3000/vigilantee/alertme/log/${id}/${lat}/${lng}/${canton}/${province}/${status}/${feeback}`, {mode:'no-cors', method:'POST'})
-    //return await this.http.post<any[]>(`http://localhost:3000/vigilantee/alertme/log/${id}/${lat}/${lng}/${canton}/${province}/${status}/${feeback}`,{}).toPromise();
   }
 
 }
