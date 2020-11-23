@@ -31,7 +31,7 @@ app.post('/simulate',
 
 app.get('/powerbi',(req,res)=>
 {
-
+  Vigilantee.getIntersections();
   Vigilantee.getActivity();
 })
 
