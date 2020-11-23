@@ -9,7 +9,6 @@ const router = express.Router();
 //Request principal
 app.post('/log/:guid/:lat/:lng/:Canton/:Provice/:status/:feedback?',
   async (req, res) => {
-    
     Vigilantee.alertMe(req.params)
     .then(
       ()=>{
@@ -20,14 +19,14 @@ app.post('/log/:guid/:lat/:lng/:Canton/:Provice/:status/:feedback?',
 )
 
 app.post('/simulate', 
-async (req, res) => {
-  SimulationController.simulateLog()
-  .then(
-    ()=>{
-      res.json({ok:1})
-    }
-  )
-}
+  async (req, res) => {
+    SimulationController.simulateLog()
+    .then(
+      ()=>{
+        res.json({ok:1})
+      }
+    )
+  }
 )
 
 app.get('/powerbi',(req,res)=>

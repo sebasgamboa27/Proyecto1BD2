@@ -226,3 +226,74 @@ db.dates.aggregate(
     }
   ]
 );
+
+
+db.Logs.aggregate(
+  [
+    {
+      $project:
+      {
+        hour: { $hour: "$TimeStamp" },
+        weekDay:         
+        {
+          $switch:
+          {
+            branches: [
+              {
+                case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 1 ] },
+                then: "Domingo"
+              },
+              {
+                case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 2 ] },
+                then: "Lunes"
+              },
+              {
+                case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 3 ] },
+                then: "Martes"
+              },
+              {
+                case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 4 ] },
+                then: "Miércoles"
+              },
+              {
+                case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 5 ] },
+                then: "Jueves"
+              },
+              {
+                case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 6 ] },
+                then: "Viernes"
+              },
+              {
+                case: { $eq : [ { $dayOfWeek : "$TimeStamp" }, 7 ] },
+                then: "Sábado"
+              },                                                                                    
+            ],
+            default: { $dayOfWeek : "$TimeStamp" }
+          }
+        }
+      }
+    },
+    {
+      $group:
+      {
+        _id : { weekDay: "$weekDay", hour : "$hour" },
+        count : { $sum : 1 }
+      }
+    },
+    {
+      $project:
+      {
+        weekDay: "$_id.weekDay",
+        hour: "$_id.hour",
+        count: "$count"
+      }
+    }, 
+    {
+      $sort : 
+      { 
+        "_id.weekDay" : 1,
+        "_id.hour" : 1,
+      }
+    }
+  ]
+);
