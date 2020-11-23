@@ -19,7 +19,7 @@ export class Vigilantee {
               Feedback  : pFeedback
           }
           
-          mongoDriver.write("AlertMe", "Logs", log,resolve)
+          mongoDriver.write("AlertMe", "Logs", log, resolve)
 
         })
 
@@ -112,7 +112,7 @@ export class Vigilantee {
                 
             }
         );
-        activity.then(ResultadoSemanal=>{
+        activity.then((ResultadoSemanal : any)=>{
           for (let i = 0;true;i++)
           {
             let ResultadoDiario = ResultadoSemanal[i]    
@@ -124,11 +124,11 @@ export class Vigilantee {
 
             var stringifiedPowerBiData= JSON.stringify(PowerBiData)
             const powerBiRequest = request.post(Constants.POWERBI_HOST_WEEKLY, stringifiedPowerBiData,
-            (error, res, body) => {
+            (error : any, res : any, body : any) => {
             console.log(res.statusCode);
 
             });
-            powerBiRequest.on('error', (e) => {
+            powerBiRequest.on('error', (e : any) => {
             console.log(Constants.POWERBI_DATAPUSH_ERROR_MSG);
             });
             powerBiRequest.write(stringifiedPowerBiData);
