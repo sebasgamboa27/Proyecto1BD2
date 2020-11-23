@@ -153,7 +153,9 @@ export class Vigilantee {
                   (logs : any) =>
                     {
                         let keys = Object.keys(logs);
-                        keys.forEach(key => {
+                        keys.forEach(
+                          (key) => 
+                          {
                             let currentCoordinates= logs[key].Location.coordinates
                             let getIntersect =
                             [
@@ -172,8 +174,10 @@ export class Vigilantee {
                                     "$match": {"count":{"$gte":Constants.GEOPOSITIONAL_INTERSECTION_MINIMUM} } 
                                 } 
                             ]
-                            MongoDriver.getInstance().aggregate("AlertMe","Logs",getIntersect).then((inter:any)=>
-                            {
+                            MongoDriver.getInstance().aggregate("AlertMe","Logs",getIntersect)
+                            .then(
+                              (inter:any)=>
+                              {
                                 let result= inter[Constants.GEOPOSITIONAL_INDEX_RESULT]
                                 if((result))
                                 {
@@ -192,8 +196,10 @@ export class Vigilantee {
                                         intersections.push([currentCoordinates,numIntersec])
                                     
                                 }  
-                            })
-                        });
+                              }
+                            )
+                        }
+                      );
                         resolve(intersections)
                     }
                 )

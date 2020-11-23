@@ -51,7 +51,7 @@ export class Constants {
     public static ZAPOTE_REFERENCE_LAT  = 9.92108221025653
     public static ZAPOTE_REFERENCE_LONG = -84.06008716251051
 
-    public static RADIUS_PER_CANTON = 10
+    public static RADIUS_PER_CANTON = 1000 * 10
 
     public static DANGER_HOUR_BEGIN = 21
     public static DANGER_HOUR_DURATION = 6
