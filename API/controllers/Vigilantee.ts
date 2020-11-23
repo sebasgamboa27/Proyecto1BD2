@@ -11,14 +11,13 @@ export class Vigilantee {
           
           let log = {
               GUID      : insertLog.guid,
-              Location  : {type:"Point",coordinates:[insertLog.lng, insertLog.lat]},
+              Location  : {type:"Point",coordinates:[+insertLog.lng, +insertLog.lat]},
               Canton    : insertLog.Canton,
               Province  : insertLog.Provice,
               TimeStamp : timeStamp,
               Status    : insertLog.status,
               Feedback  : insertLog.feedback
           }
-          console.log(log);
           
           
           mongoDriver.write("AlertMe", "Logs", log, resolve)

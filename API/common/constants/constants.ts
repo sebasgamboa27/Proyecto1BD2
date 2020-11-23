@@ -26,7 +26,7 @@ export class Constants {
 
     public static GEOPOSITIONAL_INDEX_RESULT = 0
 
-    public static CPU_CORE_COUNT = 4
+    public static CPU_CORE_COUNT = 8
 
     public static BYTES_TO_GIGABYTES_DIVISION = 10**9
 
