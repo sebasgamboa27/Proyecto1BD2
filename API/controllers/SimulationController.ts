@@ -118,24 +118,32 @@ export class SimulationController {
             {
                 province = "San José"
                 canton = "Zapote"
-                referencePoint = { latitude : Constants.ZAPOTE_REFERENCE_LAT, longitude : Constants.ZAPOTE_REFERENCE_LAT }
+                referencePoint = { latitude : Constants.ZAPOTE_REFERENCE_LAT, longitude : Constants.ZAPOTE_REFERENCE_LONG }
             }
             else if (locationRandom<88)
             {
                 province = "San José"
                 canton = "Zapote"
-                referencePoint = { latitude : Constants.ZAPOTE_REFERENCE_LAT_2, longitude : Constants.ZAPOTE_REFERENCE_LAT_2 }
+                referencePoint = { latitude : Constants.ZAPOTE_REFERENCE_LAT_2, longitude : Constants.ZAPOTE_REFERENCE_LONG_2 }
             }
             else
             {
                 province = "San José"
                 canton = "Zapote"
-                referencePoint = { latitude : Constants.ZAPOTE_REFERENCE_LAT_3, longitude : Constants.ZAPOTE_REFERENCE_LAT_3 }
+                referencePoint = { latitude : Constants.ZAPOTE_REFERENCE_LAT_3, longitude : Constants.ZAPOTE_REFERENCE_LONG_3 }
             }
 
         }
-
-        return [randomLocation.randomCirclePoint(referencePoint, Constants.RADIUS_PER_CANTON), province, canton]
+        const intersectionRandom = Math.random() * 100
+        if(intersectionRandom<40)
+        {
+            return [randomLocation.randomCirclePoint(referencePoint, Constants.RADIUS_PER_CANTON), province, canton]
+        }
+        else
+        {
+            return [referencePoint, province, canton]
+        }
+       
 
     }
 
